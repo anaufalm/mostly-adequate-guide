@@ -18,8 +18,6 @@ Ini adalah buku tentang paradigma fungsional pada umumnya. Kami akan menggunakan
 
     Kami memiliki semua fitur yang kami butuhkan untuk meniru bahasa seperti Scala atau Haskell dengan bantuan satu atau dua perpustakaan kecil. Pemrograman yang berorientasi pada objek saat ini mendominasi perindustrian, Tetapi ini jelas canggung untuk JavaScript. Ini mirip dengan berkemah di jalan raya atau menari dengan sepatu _galoshes_. Kita harus `mengikat` di semua tempat agar `ini` tidak berubah dibawah pengawasan kita, kita (belum) memiliki kelas. Kita memiliki banyak pekerjaan
     
-That said, typed functional languages will, without a doubt, be the best place to code in the style presented by this book. JavaScript will be our means of learning a paradigm, where you apply it is up to you. Luckily, the interfaces are mathematical and, as such, ubiquitous. You'll find yourself at home with swiftz, scalaz, haskell, purescript, and other mathematically inclined environments.
-
 Dikatakan bahwa, bahasa fungsional yang diketik tanpa keraguan, menjadi tempat terbaik untuk kode dalam gaya yang disajikan dalam buku ini. JavaScript akan menjadi sarana kita untuk mempelajari paradigma, di mana Anda dapat menerapkannya sesuka Anda. Untungnya, antarmuka yang bersifat matematis ini ada di mana-mana. Anda akan menemukan diri Anda berada di _home_ dengan swiftz, scalaz, haskell, purescript, dan lingkungan matematis lainnya.
 
 
@@ -82,5 +80,5 @@ Lihat [FAQ.md](FAQ.md)
     <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
   </a>
   <br />
-  This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+  Karya ini dilisensikan di bawah <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 </p>
