@@ -11,36 +11,36 @@
 - [What is Either? What is Future? What is Task?](#what-is-either-what-is-future-what-is-task)
 - [Where do map, filter, compose ... methods come from?](#where-do-map-filter-compose--methods-come-from)
 
-### Why are snippets written sometimes with semicolons and sometimes without?
+### Kenapa cuplikan terkadang ditulis dengan titik koma dan terkadang tanpa (titik koma)?
 
-> see [#6]
+> Lihat [#6]
 
-There are two schools in JavaScript, people who use them, and people who don't.  We've made the
-choice here to use them, and now, we strive to be consistent with that choice. If some are
-missing, please let us know and we will take care of the oversight.
+Ada dua aliran di JavaScript, orang yang menggunakannya, dan orang yang tidak (menggunakannya). Kami telah membuat
+pilihan di sini untuk menggunakannya, dan sekarang, kami berusaha untuk konsisten dengan pilihan tersebut. Jika ada beberapa yang
+hilang, beri tahu kami dan kami akan mengurus kesalahannya.
 
-### Aren't external libraries like _ (ramda) or $ (jquery) making calls impure?
+### Bukankah perpustakaan eksternal seperti _ (ramda) atau $ (jquery) membuat panggilan impure?
 
-> see [#50]
+> lihat [#50]
 
-Those dependencies are available as if they were in the global context, part of the language.
-So, no, calls can still be considered as pure.
-For further reading, have a look at [this article about
+Ketergantungan itu tersedia jika berada dalam konteks global, bagian dari bahasa tersebut.
+Jadi, tidak, panggilan masih bisa dianggap _pure_.
+Untuk bacaan lebih lanjut, lihatlah [artikel ini tentang
 CoEffects](http://tomasp.net/blog/2014/why-coeffects-matter/)
 
-### What is the meaning of `f a` in signature?
+### Apa maksud `f a` dalam signature?
 
-> see [#62]
+> lihat [#62]
 
-In a signature, like:
+Dalam signature, seperti:
 
 `map :: Functor f => (a -> b) -> f a -> f b`
 
-`f` refers to a `functor` that could be, for instance, Maybe or IO. Thus, the signature abstracts
-the choice of that functor by using a type variable which basically means that any functor
-might be used where `f` stands as long as all `f` are of the same type (if the first `f a` in
-the signature represents a `Maybe a`, then the second one **cannot refer to** an `IO b` but
-should be a `Maybe b`. For instance:
+`f` mengacu pada` functor` yang bisa, misalnya, Maybe atau IO. Dengan demikian, signature abstrak
+merupakan pilihan terhadap functor itu dengan menggunakan variabel tipe yang pada dasarnya berarti bahwa setiap functor
+mungkin digunakan di mana `f` berdiri selama semua `f` berada pada tipe yang sama (jika `f a` yang pertama dalam
+signature mewakili `Maybe a`, maka yang kedua **tidak bisa merujuk ke** `IO b` tetapi
+harus menjadi `Maybe b`. Contohnya:
 
 ```javascript
 let maybeString = Maybe.of("Patate")
@@ -51,63 +51,63 @@ let maybeNumber = map(f, maybeString) // Maybe(6)
 // map :: (string -> number) -> Maybe string -> Maybe number
 ```
 
-### Is there any "real world" examples available?
+### Apakah contoh "real world" tersedia?
 
-> see [#77], [#192]
+> lihat [#77], [#192]
 
-Should you haven't reached it yet, you may have a look at the [Chapter
-6](https://github.com/MostlyAdequate/mostly-adequate-guide/blob/master/ch6.md) which presents a
-simple flickr application.
-Other examples are likely to come later on. By the way, feel free to share with us your
-experience!
+Jika Anda belum mencapainya, Anda mungkin bisa melihat [Bab
+6](https://github.com/MostlyAdequate/mostly-adequate-guide/blob/master/ch6.md) yang menyajikan
+aplikasi flickr sederhana
+Contoh lain mungkin akan menyusul. Omong-omong, jangan ragu untuk berbagi pengalaman
+dengan kami!
 
-### Why does the book uses ES5? Is any ES6 version available?
+### Kenapa buku ini menggunakan ES5? Apakah versi ES6 tersedia?
 
-> see [#83], [#235]
+> lihat [#83], [#235]
 
-The book aims at being widely accessible. It started before ES6 went out, and now, as the new
-standard is being more and more accepted, we are considering making two separated editions with
-ES5 and ES6. Members of the community are already working on the ES6 version (have a look to
-[#235] for more information).
+Buku ini bertujuan untuk diakses secara luas. Ini sudah dimulai sebelum ES6 keluar, dan sekarang, karena
+standar baru semakin diterima, kami mempertimbangkan untuk membuat dua edisi terpisah
+ES5 dan ES6. Anggota komunitas yang sudah mengerjakan versi ES6 (lihat
+[#235] untuk informasi lebih lanjut).
 
-### What the heck is that reduce function about?
+### Apa fungsinya mengurangi fungsi?
 
-> see [#109]
+> lihat [#109]
 
-Reduce, accumulate, fold, inject are all usual functions in functional programming used to
-combine the elements of a data structure successively. You might have a look at [this
-talk](https://www.youtube.com/watch?v=JZSoPZUoR58&ab_channel=NewCircleTraining) to get some
-more insights about the reduce function.
+Mengurangi, menumpuk, melipat, menyuntikkan semua fungsi biasa dalam pemrograman digunakan
+untuk menggabungkan elemen struktur data secara berurutan. Anda mungkin bisa melihat [pembicaraan
+ini](https://www.youtube.com/watch?v=JZSoPZUoR58&ab_channel=NewCircleTraining) untuk mendapatkan beberapa
+wawasan lebih tentang fungsi pengurangan.
 
-### Wouldn't you use a simplified English rather than the current style?
+### Tidakkah Anda menggunakan bahasa Inggris yang disederhanakan daripada gaya saat ini?
 
-> see [#176]
+> lihat [#176]
 
-The book is written in its own style which contributes to make it consistent as a whole. If
-you're not familiar with English, see it as good training. Nevertheless, should you need help
-to understand the meaning sometimes, there are now [several
-translations](https://github.com/MostlyAdequate/mostly-adequate-guide/blob/master/TRANSLATIONS.md)
-available that could probably help you.
+Buku ini ditulis dengan gaya sendiri yang memberikan kontribusi untuk membuatnya konsisten secara keseluruhan. Jika
+Anda tidak terbiasa dengan bahasa Inggris, berlatihlah dengan bagus. Meskipun begitu, terkadang sebaiknya Anda butuh bantuan
+Untuk memahami maknanya, ada [beberapa
+terjemahan](https://github.com/MostlyAdequate/mostly-adequate-guide/blob/master/TRANSLATIONS.md)
+yang tersedia yang mungkin bisa membantu Anda.
 
-### What is Either? What is Future? What is Task?
+### Apa itu Either? Apa itus Future? Apa itu Task?
 
-> see [#194]
+> lihat [#194]
 
-We introduce all of those structures throughout the book. Therefore, you won't find any use of a
-structure that hasn't previously be defined. Do not hesitate to read again some old parts if
-you ever feel uncomfortable with those types.
-A glossary/vade mecum will come at the end to synthesize all these notions.
+Kami memperkenalkan semua struktur ini di seluruh buku. Oleh karena itu, Anda tidak akan menemukan penggunaan
+struktur yang sebelumnya tidak dijelaskan. Jangan ragu untuk membaca lagi beberapa bagian lama jika
+Anda merasa tidak nyaman dengan tipe tersebut.
+Glossary/vade akan datang terakhir untuk mensintesis semua gagasan ini.
 
-### Where do map, filter, compose ... methods come from?
+### Dimana peta, filter, compose ... metode berasal?
 
-> see [#198]
+> lihat [#198]
 
-Most of the time, those methods are defined in specific vendor libraries such as `ramda` or
-`underscore`. You should also have a look at
+Sebagian besar waktu, metode tersebut didefinisikan di perpustakaan vendor tertentu seperti `ramda` atau
+`underscore` Anda juga harus melihat
 [support.js](https://github.com/MostlyAdequate/mostly-adequate-guide/blob/master/code%2Fpart1_exercises%2Fsupport.js)
-in which we define several implementations used for the exercises. Those functions are really
-common in functional programming and even though their implementations may vary a bit, their
-meanings remain fairly consistent between libraries.
+di mana kita mendefinisikan beberapa implementasi yang digunakan untuk latihan. Fungsi itu benar-benar
+umum dalam pemrograman fungsional dan meskipun implementasi mereka mungkin sedikit berbeda, makna
+mereka tetap cukup konsisten dengan perpustakaan.
 
 
 [#6]: https://github.com/MostlyAdequate/mostly-adequate-guide/issues/6
