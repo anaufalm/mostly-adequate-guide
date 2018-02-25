@@ -1,17 +1,16 @@
 ## FAQ
 
-- [Why are snippets written sometimes with semicolons and sometimes
-  without?](#why-are-snippets-written-sometimes-with-semicolons-and-sometimes-without)
-- [Aren't external libraries like _ (ramda) or $ (jquery) making calls impure?](#arent-external-libraries-like-_-ramda-or--jquery-making-calls-impure)
-- [What is the meaning of `f a` in signature?](#what-is-the-meaning-of-f-a-in-signature)
-- [Is there any "real world" examples available?](#is-there-any-real-world-examples-available)
-- [Why does the book uses ES5? Is any ES6 version available?](#why-does-the-book-uses-es5-is-any-es6-version-available)
-- [What the heck is that reduce function about?](#what-the-heck-is-that-reduce-function-about)
-- [Wouldn't you use a simplified English rather than the current style?](#wouldnt-you-use-a-simplified-english-rather-than-the-current-style)
-- [What is Either? What is Future? What is Task?](#what-is-either-what-is-future-what-is-task)
-- [Where do map, filter, compose ... methods come from?](#where-do-map-filter-compose--methods-come-from)
+- [Kenapa cuplikan terkadang ditulis dengan titik koma dan terkadang tidak?](#kenapa-cuplikan-terkadang-ditulis-dengan-titik-koma-dan-terkadang-tidak)
+- [Bukankah perpustakaan eksternal seperti _ (ramda) atau $ (jquery) membuat panggilan impure?](#bukankah-perpustakaan-eksternal-seperti-_-ramda-atau-jquery-membuat-panggilan-impure)
+- [Apa maksud `f a` dalam signature?](#apa-maksud-f-a-dalam-signature)
+- [Apakah contoh "real world" tersedia?](#apakah-contoh-real-world-tersedia)
+- [Kenapa buku ini menggunakan ES5? Apakah versi ES6 tersedia?](#kenapa-buku-ini-menggunakan-es5-apakah-versi-es6-tersedia)
+- [Apa fungsinya mengurangi fungsi?](#apa-fungsinya-mengurangi-fungsi)
+- [Tidakkah Anda menggunakan bahasa Inggris yang disederhanakan daripada gaya saat ini?](#tidakkah-anda-menggunakan-bahasa-inggris-yang-disederhanakan-daripada-gaya-saat-ini)
+- [Apa itu Either? Apa itu Future? Apa itu Task?](#apa-itu-either-apa-itu-future-apa-itu-task)
+- [Dimana peta, filter, compose ... metode berasal?](#dimana-peta-filter-compose-metode-berasal)
 
-### Kenapa cuplikan terkadang ditulis dengan titik koma dan terkadang tanpa (titik koma)?
+### Kenapa cuplikan terkadang ditulis dengan titik koma dan terkadang tidak?
 
 > Lihat [#6]
 
@@ -89,7 +88,7 @@ Untuk memahami maknanya, ada [beberapa
 terjemahan](https://github.com/MostlyAdequate/mostly-adequate-guide/blob/master/TRANSLATIONS.md)
 yang tersedia yang mungkin bisa membantu Anda.
 
-### Apa itu Either? Apa itus Future? Apa itu Task?
+### Apa itu Either? Apa itu Future? Apa itu Task?
 
 > lihat [#194]
 
