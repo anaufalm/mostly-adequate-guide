@@ -20,24 +20,25 @@ Ini adalah buku tentang paradigma fungsional pada umumnya. Kami akan menggunakan
     
 That said, typed functional languages will, without a doubt, be the best place to code in the style presented by this book. JavaScript will be our means of learning a paradigm, where you apply it is up to you. Luckily, the interfaces are mathematical and, as such, ubiquitous. You'll find yourself at home with swiftz, scalaz, haskell, purescript, and other mathematically inclined environments.
 
-
-## Read it Online
-
-For a best reading experience, [read it online via Gitbook](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/).
-
-- Quick-access side-bar
-- In-browser exercises
-- In-depth examples
+Dikatakan bahwa, bahasa fungsional yang diketik tanpa keraguan, menjadi tempat terbaik untuk kode dalam gaya yang disajikan dalam buku ini. JavaScript akan menjadi sarana kita untuk mempelajari paradigma, di mana Anda dapat menerapkannya sesuka Anda. Untungnya, antarmuka yang bersifat matematis ini ada di mana-mana. Anda akan menemukan diri Anda berada di _home_ dengan swiftz, scalaz, haskell, purescript, dan lingkungan matematis lainnya.
 
 
-## Download it
+## Baca secara Daring (online)
 
-* [Download PDF](https://www.gitbook.com/download/pdf/book/mostly-adequate/mostly-adequate-guide)
-* [Download EPUB](https://www.gitbook.com/download/epub/book/mostly-adequate/mostly-adequate-guide)
-* [Download Mobi (Kindle)](https://www.gitbook.com/download/mobi/book/mostly-adequate/mostly-adequate-guide)
+Untuk pengalaman membaca yang baik, [baca secara online via Gitbook](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/).
+
+- Akses cepat _side-bar_
+- Latihan di dalam browser
+- Contoh yang mendalam
+
+## Unduh
+
+* [Unduh PDF](https://www.gitbook.com/download/pdf/book/mostly-adequate/mostly-adequate-guide)
+* [Unduh EPUB](https://www.gitbook.com/download/epub/book/mostly-adequate/mostly-adequate-guide)
+* [Unduh Mobi (Kindle)](https://www.gitbook.com/download/mobi/book/mostly-adequate/mostly-adequate-guide)
 
 
-## Do it yourself
+## Lakukan sendiri
 
 ```
 git clone https://github.com/MostlyAdequate/mostly-adequate-guide.git
@@ -48,29 +49,29 @@ gitbook pdf
 ```
 
 
-# Table of Contents
+# Daftar Isi
 
-See [SUMMARY.md](SUMMARY.md)
+Lihat [SUMMARY.md](SUMMARY.md)
 
-### Contributing
+### Berkontribusi
 
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+Lihat [CONTRIBUTING.md](CONTRIBUTING.md)
 
-### Translations
+### Penerjemahan
 
-See [TRANSLATIONS.md](TRANSLATIONS.md)
+Lihat [TRANSLATIONS.md](TRANSLATIONS.md)
 
 ### FAQ
 
-See [FAQ.md](FAQ.md)
+Lihat [FAQ.md](FAQ.md)
 
 
 
-# Plans for the future
+# Rancangan mendatang
 
-* **Part 1** (chapters 1-7) is a guide to the basics. I'm updating as I find errors since this is the initial draft. Feel free to help!
-* **Part 2** (chapters 8-10) will address type classes like functors and monads all the way through to traversable. I hope to squeeze in transformers and a pure application.
-* **Part 3** (chapters 11+) will start to dance the fine line between practical programming and academic absurdity. We'll look at comonads, f-algebras, free monads, yoneda, and other categorical constructs.
+* **Bagian 1** (bab 1-7) adalah panduan dasar. Saya telah memperbaruinya karena saya menemukan kesalahan sejak ditetapkanya sebagai draf awal. Jangna ragu untuk membantu!
+* **Bagian 2** (bab 8-10) akan membahas tentang jenis kelas seperti _functors_ dan me-_monads_ seluruh jalan menuju _traversable_. Saya berharap untuk lebih memfokuskan perubahan dan aplikasi murni.
+* **Bagian 3** (bab 11+) akan bermain dengan garis halus antara pemrograman praktis dan absurditas akademis. Kita akan melihat comonads, f-algebras, free monads, yoneda, dan konstruksi kategoris lainnya.
 
 
 ---
