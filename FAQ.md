@@ -1,14 +1,14 @@
 ## FAQ
 
 - [Kenapa cuplikan terkadang ditulis dengan titik koma dan terkadang tidak?](#kenapa-cuplikan-terkadang-ditulis-dengan-titik-koma-dan-terkadang-tidak)
-- [Bukankah perpustakaan eksternal seperti _ (ramda) atau $ (jquery) membuat panggilan impure?](#bukankah-perpustakaan-eksternal-seperti-_-ramda-atau-jquery-membuat-panggilan-impure)
+- [Bukankah perpustakaan eksternal seperti _ (ramda) atau $ (jquery) membuat panggilan impure?](#bukankah-perpustakaan-eksternal-seperti-_-ramda-atau--jquery-membuat-panggilan-impure)
 - [Apa maksud `f a` dalam signature?](#apa-maksud-f-a-dalam-signature)
 - [Apakah contoh "real world" tersedia?](#apakah-contoh-real-world-tersedia)
 - [Kenapa buku ini menggunakan ES5? Apakah versi ES6 tersedia?](#kenapa-buku-ini-menggunakan-es5-apakah-versi-es6-tersedia)
 - [Apa fungsinya mengurangi fungsi?](#apa-fungsinya-mengurangi-fungsi)
 - [Tidakkah Anda menggunakan bahasa Inggris yang disederhanakan daripada gaya saat ini?](#tidakkah-anda-menggunakan-bahasa-inggris-yang-disederhanakan-daripada-gaya-saat-ini)
 - [Apa itu Either? Apa itu Future? Apa itu Task?](#apa-itu-either-apa-itu-future-apa-itu-task)
-- [Dimana peta, filter, compose ... metode berasal?](#dimana-peta-filter-compose-metode-berasal)
+- [Dimana peta, filter, compose ... metode berasal?](#dimana-peta-filter-compose--metode-berasal)
 
 ### Kenapa cuplikan terkadang ditulis dengan titik koma dan terkadang tidak?
 
