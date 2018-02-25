@@ -13,3 +13,5 @@
 ## Membuat Terjemahan baru
 
 Lihat [Membuat Terjemahan baru](CONTRIBUTING.md#Translations)
+
+
