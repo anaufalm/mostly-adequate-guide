@@ -1,22 +1,22 @@
-# Chapter 01: What Ever Are We Doing?
+# Bab 01: Apa Yang Kita Lakukan?
 
-## Introductions
+## Perkenalan
 
-Hi there! I'm Professor Franklin Frisby. Pleased to make your acquaintance. We'll be spending some time together, as I'm supposed to teach you a bit about functional programming. But enough about me, what about you? I'm hoping that you're at least a bit familiar with the JavaScript language, have a teensy bit of Object-Oriented experience, and fancy yourself a working class programmer. You don't need to have a PhD in Entomology, you just need to know how to find and kill some bugs.
+Hai! Saya Profesor Franklin Frisby. Senang berkenalan dengan Anda. Kita akan menghabiskan beberapa waktu bersama, karena saya harus mengajarkan Anda sedikit tentang pemrograman fungsional. Cukup sekian tentang saya, bagaimana dengan Anda? Saya berharap setidaknya Anda sedikit familiar dengan bahasa JavaScript, memiliki sedikit pengalaman tentang Object-Oriented, dan menyukai programmer kelas pekerja. Anda tidak perlu memiliki gelar PhD di bidang Entomologi, Anda hanya perlu tahu bagaimana menemukan dan menghilangkah beberapa bug.
 
-I won't assume that you have any previous functional programming knowledge, because we both know what happens when you assume. I will, however, expect you to have run into some of the unfavorable situations that arise when working with mutable state, unrestricted side effects, and unprincipled design. Now that we've been properly introduced, let's get on with it.
+Saya tidak berasumsi bahwa Anda memiliki pengetahuan pemrograman fungsional sebelumnya, karena kita berdua tahu apa yang terjadi saat Anda berasumsi. Akan tetapi, saya berharap Anda mengalami beberapa situasi yang tidak menguntungkan yang muncul saat bekerja dengan keadaan yang bisa berubah, efek samping yang tidak terbatas, dan desain yang tidak memiliki prinsip. Sekarang setelah kita berkenalan, mari kita lanjutkan.
 
-The purpose of this chapter is to give you a feel for what we're after when we write functional programs. In order to be able to understand the following chapters, we must have some idea about what makes a program *functional*. Otherwise we'll find ourselves scribbling aimlessly, avoiding objects at all costs - a clumsy endeavor indeed. We need a clear bullseye to hurl our code at, some celestial compass for when the waters get rough.
+Tujuan bab ini adalah untuk memberikan Anda nuansa tentang apa yang kita cari saat kita menulis program fungsional. Agar bisa memahami bab-bab berikutnya, kita harus memiliki beberapa gagasan tentang apa yang program *fungsional* buat. Jika tidak, kita akan merasa diri kita menulis tanpa tujuan, menghindari benda-benda yang semuanya dibiayai - usaha yang ceroboh memang. Kita membutuhkan sasaran yang jelas untuk melemparkan kode kita, beberapa kompas langit saat air menjadi kasar.
 
-Now, there are some general programming principles - various acronymic credos that guide us through the dark tunnels of any application: DRY (don't repeat yourself), YAGNI (ya ain't gonna need it), loose coupling high cohesion, the principle of least surprise, single responsibility, and so on.
+Sekarang, ada beberapa prinsip pemrograman umum - berbagai kredo akronim yang membimbing kita melewati terowongan gelap aplikasi: _DRY (don't repeat yourself)_ (jangan ulangi dirimu) , _YAGNI (ya ain't gonna need it)_ (ya tidak akan membutuhkannya), kopling yang longgar dengan kohesi tinggi, prinsipnya paling tidak mengejutkan, tanggung jawab tunggal, dan sebagainya.
 
-I won't belabor you by listing each and every guideline I've heard throughout the years... The point of the matter is that they hold up in a functional setting, although they're merely tangential to our ultimate goal. What I'd like you to get a feel for now, before we get any further, is our intention when we poke and prod at the keyboard; our functional Xanadu.
+Saya tidak akan menyuruh Anda dengan mencantumkan setiap pedoman yang pernah saya dengar sepanjang tahun... Intinya adalah mereka bertahan dalam keadaan fungsional, walaupun mereka bersikap tangensial terhadap tujuan akhir kita. Akan tetapi saya ingin Anda merasakannya sekarang, sebelum kita melangkah lebih jauh, adalah niat kita saat kita menekan dan memberikan dorongan pada keyboard; fungsional Xanadu kita.
 
 <!--BREAK-->
 
-## A Brief Encounter
+## Pertemuan Singkat
 
-Let's start with a touch of insanity. Here is a seagull application. When flocks conjoin they become a larger flock, and when they breed, they increase by the number of seagulls with whom they're breeding. Now, this is not intended to be good Object-Oriented code, mind you, it is here to highlight the perils of our modern, assignment based approach. Behold:
+Mari kita mulai dengan sentuhan yang sedikit gila. Berikut adalah aplikasi _seagull_ (camar). Ketika kawanan burung menyerang mereka dengan menjadi kawanan yang lebih besar, dan ketika mereka berkembang biak, mereka meningkat dengan berkembang biaknya jumlah burung camar. Nah, ini tidak dimaksudkan untuk menjadi kode Object-Oriented yang baik, ingatlah, inilah alasannya untuk menyoroti bahaya dari pendekatan berbasis tugas modern kita. Lihat:
 
 ```js
 class Flock {
@@ -46,11 +46,11 @@ const result = flockA
 // 32
 ```
 
-Who on earth would craft such a ghastly abomination? It is unreasonably difficult to keep track of the mutating internal state. And, good heavens, the answer is even incorrect! It should have been `16`, but `flock_a` wound up permanently altered in the process. Poor `flock_a`. This is anarchy in the I.T.! This is wild animal arithmetic!
+Siapa di bumi ini yang akan membuat kekejian yang sangat mengerikan? Tidak masuk akal, sulit untuk melacak keadaan internal yang bermutasi. Dan, selamat, jawabannya bahkan tidak benar! Seharusnya `16`, tetapi `flock_a` berakhir secara permanen dalam proses perubahannya. `flock_a` yang malang. Ini adalah anarki pada I.T.! Ini adalah aritmatika binatang liar!
 
-If you don't understand this program, it's okay, neither do I. The point to remember here is that state and mutable values are hard to follow, even in such a small example.
+Jika Anda tidak mengerti program ini, tidak masalah, saya juga tidak. Intinya yang perlu diingat di sini adalah bahwa nilai state dan mutable sulit diikuti, bahkan dalam contoh kecil seperti itu.
 
-Let's try again, this time using a more functional approach:
+Mari kita coba lagi, kali ini menggunakan pendekatan yang lebih fungsional:
 
 ```js
 const conjoin = (flockX, flockY) => flockX + flockY;
@@ -64,9 +64,9 @@ const result =
 // 16
 ```
 
-Well, this time we got the right answer. With much less code. The function nesting is a tad confusing... (we'll remedy this situation in ch5). It's better, but let's dig a little bit deeper. There are benefits to calling a spade a spade. Had we scrutinized our custom functions more closely, we would have discovered that we're just working with simple addition (`conjoin`) and multiplication (`breed`).
+Nah, kali ini kita mendapat jawaban yang benar. Dengan kode yang jauh lebih sedikit. Fungsi nesting adalah anak yang membingungkan... (kami akan memperbaiki situasi ini di bab5). Ini lebih baik, tapi mari kita menggali sedikit lebih dalam. Ada manfaatnya juga memanggil spade spade. Seandainya kita teliti fungsi yang sudah kita buat lebih dekat, kita akan menemukan bahwa kita hanya perlu menambahkan (`conjoin`) dan perkalian (` breed`) yang sederhana.
 
-There's really nothing special at all about these two functions other than their names. Let's rename our custom functions to `multiply` and `add` in order to reveal their true identities.
+Sama sekali tidak ada yang spesial dari dua fungsi ini selain nama mereka. Mari kita ubah nama fungsi yang sudah kita buat menjadi `multiply` dan` add` untuk mengungkapkan identitas aslinya.
 
 ```js
 const add = (x, y) => x + y;
@@ -79,7 +79,7 @@ const result =
     add(multiply(flockB, add(flockA, flockC)), multiply(flockA, flockB));
 // 16
 ```
-And with that, we gain the knowledge of the ancients:
+Dan dengan itu, kita mendapatkan pengetahuan tentang orang sebelumnya:
 
 ```js
 // associative
@@ -95,7 +95,7 @@ add(x, 0) === x;
 multiply(x, add(y,z)) === add(multiply(x, y), multiply(x, z));
 ```
 
-Ah yes, those old faithful mathematical properties should come in handy. Don't worry if you didn't know them right off the top of your head. For a lot of us, it's been a while since we learned about these laws of arithmetic. Let's see if we can use these properties to simplify our little seagull program.
+Ah iya, sifat setia matematis tersebut seharusnya sangat berguna. Jangan khawatir jika Anda tidak mengenal mereka dalam kepala Anda. Kebanyakan dari kita, sudah lama belajar tentang hukum aritmatika ini. Mari kita lihat apakah kita bisa menggunakan properti ini untuk menyederhanakan program _little seagull_ kita.
 
 ```js
 // Original line
@@ -109,16 +109,16 @@ add(multiply(flockB, flockA), multiply(flockA, flockB));
 multiply(flockB, add(flockA, flockA));
 ```
 
-Brilliant! We didn't have to write a lick of custom code other than our calling function. We include `add` and `multiply` definitions here for completeness, but there is really no need to write them - we surely have an `add` and `multiply` provided by some existing library.
+Cemerlang! Kita tidak perlu menulis sejumlah kode khusus selain fungsi pemanggilan. Kita menyertakan definisi `add` dan `multiply` sebagai pelengkap, tetapi sebenarnya tidak perlu menuliskannya - kita pasti mempunyai `add` dan `multiply` yang disediakan oleh beberapa perpustakaan yang ada.
 
-You may be thinking "how very strawman of you to put such a mathy example up front". Or "real programs are not this simple and cannot be reasoned about in such a way." I've chosen this example because most of us already know about addition and multiplication, so it's easy to see how math is very useful for us here.
+Anda mungkin berpikir "betapa percaya dirinya Anda untuk memberikan contoh mati seperti itu di depan". Atau "program yang nyata tidak sesederhana ini dan tidak dapat dibayangkan begitu saja." Saya memilih contoh ini karena kebanyakan dari kita sudah tahu tentang penambahan dan perbanyakan, jadi mudah dilihat bagaimana matematika sangat berguna bagi kita disini.
 
-Don't despair - throughout this book, we'll sprinkle in some category theory, set theory, and lambda calculus and write real world examples that achieve the same elegant simplicity and results as our flock of seagulls example. You needn't be a mathematician either. It will feel natural and easy, just like you were using a "normal" framework or API.
+Jangan putus asa - sepanjang buku ini, kita akan sebarkan beberapa teori kategori, teori menetapkan, dan kalkulus lambda dan menulis contoh dunia nyata yang mencapai kesederhanaan dan hasil elegan yang sama seperti contoh _flock_ dari _seagulls_. Anda juga tidak perlu menjadi matematikawan. Ini akan terasa alami dan mudah, sama seperti Anda menggunakan framework "normal" atau API.
 
-It may come as a surprise to hear that we can write full, everyday applications along the lines of the functional analog above. Programs that have sound properties. Programs that are terse, yet easy to reason about. Programs that don't reinvent the wheel at every turn. Lawlessness is good if you're a criminal, but in this book, we'll want to acknowledge and obey the laws of math.
+Mungkin akan mengejutkan jika kita bisa menulis aplikasi sehari penuh sepanjang analog fungsional di atas. Program yang memiliki sifat suara. Program yang singkat, namun mudah dipikirkan. Program yang tidak menemukan roda di setiap belokan. Ketiadaan hukum itu baik jika Anda seorang kriminal, namun dalam buku ini, kita ingin mengakui dan mematuhi hukum matematika.
 
-We'll want to use a theory where every piece tends to fit together so politely. We'll want to represent our specific problem in terms of generic, composable bits and then exploit their properties for our own selfish benefit. It will take a bit more discipline than the "anything goes" approach of imperative programming (we'll go over the precise definition of "imperative" later in the book, but for now consider it anything other than functional programming). The payoff of working within a principled, mathematical framework will truly astound you.
+Kami ingin menggunakan teori di mana setiap bagian cenderung cocok bersama dengan baik. Kami ingin mewakili masalah spesifik kami dalam hal generik, mengkomposit bit kemudian mengeksploitasi properti mereka untuk keuntungan kita sendiri. Ini akan memerlukan sedikit disiplin daripada pendekatan "apapun itu" dari pemrograman imperatif (kita akan membahas definisi "imperatif" yang tepat di buku ini, tapi untuk saat ini anggap saja itu selain pemrograman fungsional). Dengan hasil kerja dengan berprinsip, framework matematis akan benar-benar mengejutkan Anda.
 
-We've seen a flicker of our functional northern star, but there are a few concrete concepts to grasp before we can really begin our journey.
+Kami telah melihat sekilas bintang utara fungsional kami, namun ada beberapa konsep konkret yang harus dipegang sebelum kami benar-benar memulai perjalanan kami.
 
-[Chapter 02: First Class Functions](ch02.md)
+[Bab 02: Fungsi Kelas Pertama](ch02.md)
