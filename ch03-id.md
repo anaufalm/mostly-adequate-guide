@@ -1,12 +1,12 @@
-# Chapter 03: Pure Happiness with Pure Functions
+# Bab 03: Kebahagiaan Pure dengan Fungsi Pure
 
-## Oh to Be Pure Again
+## Oh untuk Menjadi Pure Lagi
 
-One thing we need to get straight is the idea of a pure function.
+Satu hal yang perlu kita luruskan adalah gagasan tentang fungsi pure.
 
->A pure function is a function that, given the same input, will always return the same output and does not have any observable side effect.
+>Fungsi pure adalah fungsi yang memberikan input yang sama, akan selalu menghasilkan output yang sama dan tidak memiliki efek samping yang dapat dilihat.
 
-Take `slice` and `splice`. They are two functions that do the exact same thing - in a vastly different way, mind you, but the same thing nonetheless. We say `slice` is *pure* because it returns the same output per input every time, guaranteed. `splice`, however, will chew up its array and spit it back out forever changed which is an observable effect.
+Gunakan `slice` dan `splice`. Mereka adalah dua fungsi yang melakukan hal yang sama - dengan cara yang sangat berbeda, ingat, meskipun begitu mereka tetap sama. Kita mengatakan `slice` dengan *pure* karena menghasilkan output per input yang sama setiap waktu, pasti. Bagaimanapun juga, `splice` akan mengambil arraynya dan mengeluarkannya kembali untuk perubahan selamanya yang merupakan efek yang dapat diamati.
 
 ```js
 const xs = [1,2,3,4,5];
@@ -27,9 +27,9 @@ xs.splice(0,3); // [4,5]
 xs.splice(0,3); // []
 ```
 
-In functional programming, we dislike unwieldy functions like `splice` that *mutate* data. This will never do as we're striving for reliable functions that return the same result every time, not functions that leave a mess in their wake like `splice`.
+Dalam pemrograman fungsional, kita tidak menyukai fungsi yang sulit seperti `splice` yang me-*mutate* data. Ini tidak akan pernah dilakukan karena kita berusaha untuk mendapatkan fungsi yang dapat diandalkan yang mengembalikan hasil yang sama setiap saat, bukan fungsi yang meninggalkan kegagalan di akhir seperti `splice`.
 
-Let's look at another example.
+Mari kita lihat contoh lain.
 
 ```js
 // impure
@@ -43,42 +43,42 @@ const checkAge = (age) => {
 };
 ```
 
-In the impure portion, `checkAge` depends on the mutable variable `minimum` to determine the result. In other words, it depends on system state which is disappointing because it increases the [cognitive load](http://en.wikipedia.org/wiki/Cognitive_load) by introducing an external environment.
+Pada bagian _impure_, `checkAge` bergantung pada variabel yang dapat berubah nilai `minimum` untuk menentukan hasilnya. Dengan kata lain, itu tergantung pada sistem _state_ yang menyebalkan karena meningkatkan [load kognitif](http://en.wikipedia.org/wiki/Cognitive_load) dengan mengenalkan lingkungan eksternal.
 
-It might not seem like a lot in this example, but this reliance upon state is one of the largest contributors to system complexity(http://www.curtclifton.net/storage/papers/MoseleyMarks06a.pdf). This `checkAge` may return different results depending on factors external to input, which not only disqualifies it from being pure, but also puts our minds through the ringer each time we're reasoning about the software.
+Ini mungkin tidak seperti contoh kebanyakan, tetapi ketergantungan pada _state_ adalah salah satu kontributor terbesar terhadap kompleksitas sistem(http://www.curtclifton.net/storage/papers/MoseleyMarks06a.pdf). `CheckAge` ini dapat mengembalikan hasil yang berbeda tergantung pada faktor eksternal untuk input, yang tidak hanya men-diskualifikasi-nya karena murni, namun juga menempatkan ide kita melalui ringer setiap kali kita mempertimbangkan perangkat lunak.
 
-Its pure form, on the other hand, is completely self sufficient. We can  also make `minimum` immutable, which preserves the purity as the state will never change. To do this, we must create an object to freeze.
+Bentuk _pure_ ini, di sisi lain, benar-benar mandiri. Kita juga bisa membuat nilai `minimum` menjadi tidak berubah, yang menjaga kemurniannya karena _state_ tidak akan pernah berubah. Untuk melakukan ini, kita harus membuat objek menjadi _freeze_.
 
 ```js
 const immutableState = Object.freeze({ minimum: 21 });
 ```
 
-## Side Effects May Include...
+## Efek Samping Mungkin Menyertakan...
 
-Let's look more at these "side effects" to improve our intuition. So what is this undoubtedly nefarious *side effect* mentioned in the definition of *pure function*? We'll be referring to *effect* as anything that occurs in our computation other than the calculation of a result.
+Mari kita lihat lebih banyak tentang "efek samping" ini untuk meningkatkan intuisi kita. Jadi, apa sebenarnya *efek samping* yang tidak pasti ini yang disebutkan dalam definisi *fungsi pure*? Kita akan mengacu pada *efek* apapun yang terjadi pada perhitungan kita selain dari hasil perhitungannya.
 
-There's nothing intrinsically bad about effects and we'll be using them all over the place in the chapters to come. It's that *side* part that bears the negative connotation. Water alone is not an inherent larvae incubator, it's the *stagnant* part that yields the swarms, and I assure you, *side* effects are a similar breeding ground in your own programs.
+Tidak ada intrinsik yang buruk tentang efek dan kami akan menggunakannya di semua tempat di bab-bab yang akan datang. Bagian *sisi* itulah yang mengandung konotasi negatif. Air yang tenang bukanlah penetas larva yang melekat, ini adalah bagian *stagnan* yang menghasilkan kawanan, dan saya yakinkan efek sampingnya adalah tempat berkembang biak yang sama dalam program Anda sendiri.
 
->A *side effect* is a change of system state or *observable interaction* with the outside world that occurs during the calculation of a result.
+>*Efek samping* adalah perubahan pada sistem _state_ atau *interaksi yang dapat diamati* dengan dunia luar yang terjadi selama hasil penghitungan.
 
-Side effects may include, but are not limited to
+Efek samping mungkin menyertakan, namun tidak terbatas pada
 
-  * changing the file system
-  * inserting a record into a database
-  * making an http call
-  * mutations
-  * printing to the screen / logging
-  * obtaining user input
-  * querying the DOM
-  * accessing system state
+  * mengubah file sistem
+  * memasukan rekaman ke database
+  * membuat panggilan http
+  * mutasi
+  * mencetak ke layar / _logging_
+  * mendapatkan input pengguna
+  * meng-_query_ DOM
+  * mengakses sistem _state_
 
-And the list goes on and on. Any interaction with the world outside of a function is a side effect, which is a fact that may prompt you to suspect the practicality of programming without them. The philosophy of functional programming postulates that side effects are a primary cause of incorrect behavior.
+Dan daftarnya akan terus berkelanjutan. Setiap interaksi di luar fungsi adalah efek samping, yang merupakan fakta yang mungkin mendorong Anda untuk mencurigai pemrograman praktis Anda tanpa mereka. Filosofi pemrograman fungsional mengemukakan bahwa efek samping adalah penyebab utama perilaku yang salah.
 
-It is not that we're forbidden to use them, rather we want to contain them and run them in a controlled way. We'll learn how to do this when we get to functors and monads in later chapters, but for now, let's try to keep these insidious functions separate from our pure ones.
+Bukannya kita dilarang menggunakannya, akan tetapi kita ingin menahan dan menjalankannya dengan cara yang terkontrol. Kita akan belajar bagaimana melakukan ini ketika kita sampai di _functors_ dan _monads_ di bab-bab selanjutnya, tapi untuk saat ini, mari kita coba untuk menjaga agar fungsi tersembunyi ini terpisah dari kebiasaan kita.
 
-Side effects disqualify a function from being *pure*. And it makes sense: pure functions, by definition, must always return the same output given the same input, which is not possible to guarantee when dealing with matters outside our local function.
+Efek samping men-diskualifikasi-kan fungsi dari dan menjadi *pure*. Dan itu masuk akal: fungsi _pure_, menurut definisi, harus selalu mengembalikan output yang sama dengan masukan yang sama, yang tidak mungkin menjamin saat menangani masalah di luar fungsi lokal kita.
 
-Let's take a closer look at why we insist on the same output per input. Pop your collars, we're going to look at some 8th grade math.
+Mari kita lihat lebih dekat kenapa kita memaksakan output per input yang sama. Singsingkan lengan baju Anda, kita akan melihat beberapa matematika kelas 8.
 
 ## 8th Grade Math
 
