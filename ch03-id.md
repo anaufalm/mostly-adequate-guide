@@ -80,32 +80,42 @@ Efek samping men-diskualifikasi-kan fungsi dari dan menjadi *pure*. Dan itu masu
 
 Mari kita lihat lebih dekat kenapa kita memaksakan output per input yang sama. Singsingkan lengan baju Anda, kita akan melihat beberapa matematika kelas 8.
 
-## 8th Grade Math
+## Matematika Kelas 8
 
-From mathisfun.com:
+Berdasarkan mathisfun.com:
 
 > A function is a special relationship between values:
 > Each of its input values gives back exactly one output value.
 
+> Fungsi adalah hubungan khusus antara nilai:
+> Masing-masing nilai inputnya memberikan satu nilai output kembali.
+
 In other words, it's just a relation between two values: the input and the output. Though each input has exactly one output, that output doesn't necessarily have to be unique per input. Below shows a diagram of a perfectly valid function from `x` to `y`;
 
-<img src="images/function-sets.gif" alt="function sets" />(http://www.mathsisfun.com/sets/function.html)
+Dengan kata lain, itu hanya hubungan antara dua nilai: input dan output. Meskipun setiap input memiliki satu output, output itu tidak harus unik per inputnya. Di bawah ini menunjukkan diagram fungsi yang benar-benar valid dari `x` ke `y`;
+
+<img src="images/function-sets.gif" alt="set fungsi" />(http://www.mathsisfun.com/sets/function.html)
 
 To contrast, the following diagram shows a relation that is *not* a function since the input value `5` points to several outputs:
+Sebaliknya, diagram berikut menunjukkan relasi yang *bukan* fungsi karena nilai input `5` adalah poin ke beberapa output:
 
-<img src="images/relation-not-function.gif" alt="relation not function" />(http://www.mathsisfun.com/sets/function.html)
+<img src="images/relation-not-function.gif" alt="relasi bukan fungsi" />(http://www.mathsisfun.com/sets/function.html)
 
 Functions can be described as a set of pairs with the position (input, output): `[(1,2), (3,6), (5,10)]` (It appears this function doubles its input).
+Fungsi dapat digambarkan sebagai satu pasangan dengan posisi (input, output): `[(1,2), (3,6), (5,10)]` (Terlihat fungsi ini menggandakan inputnya).
 
-Or perhaps a table:
+Atau mungkin tabel:
 <table> <tr> <th>Input</th> <th>Output</th> </tr> <tr> <td>1</td> <td>2</td> </tr> <tr> <td>2</td> <td>4</td> </tr> <tr> <td>3</td> <td>6</td> </tr> </table>
 
 Or even as a graph with `x` as the input and `y` as the output:
+Atau bahkan sebagai grafik dengan `x` sebagai input dan `y` sebagai outputnya:
 
-<img src="images/fn_graph.png" width="300" height="300" alt="function graph" />
+<img src="images/fn_graph.png" width="300" height="300" alt="grafik fungsi" />
 
 
 There's no need for implementation details if the input dictates the output. Since functions are simply mappings of input to output, one could simply jot down object literals and run them with `[]` instead of `()`.
+
+Tidak perlu rincian implementasi jika input menentukan output. Karena fungsi hanyalah pemetaan input ke output, seseorang dapat dengan mudah menuliskan literal objek dan menjalankannya dengan `[]` daripada `()`.
 
 ```js
 const toLowerCase = {
@@ -131,7 +141,11 @@ isPrime[3]; // true
 
 Of course, you might want to calculate instead of hand writing things out, but this illustrates a different way to think about functions. (You may be thinking "what about functions with multiple arguments?". Indeed, that presents a bit of an inconvenience when thinking in terms of mathematics. For now, we can bundle them up in an array or just think of the `arguments` object as the input. When we learn about *currying*, we'll see how we can directly model the mathematical definition of a function.)
 
+Tentu saja, Anda mungkin ingin menghitung bukan dengan dengan coretan hal tersebut, tapi ini menggambarkan cara berpikir yang berbeda mengenai fungsi. (Anda mungkin berpikir "bagaimana dengan fungsi dengan argumen yang banyak?" Memang, itu menyajikan sedikit ketidaknyamanan saat berpikir tentang aturan matematika. Untuk saat ini, kita dapat menggabungkannya dalam array atau hanya memikirkan `argumen` objek sebagai input. Ketika kita belajar tentang *currying*, kita akan melihat bagaimana kita bisa secara langsung meniru definisi matematis sebuah fungsi.)
+
 Here comes the dramatic reveal: Pure functions *are* mathematical functions and they're what functional programming is all about. Programming with these little angels can provide huge benefits. Let's look at some reasons why we're willing to go to great lengths to preserve purity.
+
+Begini penjelasan dramatisnya: Fungsi murni *adalah* fungsi matematis dan itu adalah pemrograman fungsional. Pemrograman dengan malaikat kecil ini bisa memberi manfaat yang besar. Mari kita lihat beberapa alasan mengapa kita rela berusaha keras untuk menjaga kemurnian.
 
 ## The Case for Purity
 
