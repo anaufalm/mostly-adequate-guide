@@ -2,9 +2,9 @@
 
 ## Oh untuk Menjadi Pure Lagi
 
-Satu hal yang perlu kita luruskan adalah gagasan tentang fungsi pure.
+Satu hal yang perlu kita luruskan adalah gagasan tentang fungsi _pure_.
 
->Fungsi pure adalah fungsi yang memberikan input yang sama, akan selalu menghasilkan output yang sama dan tidak memiliki efek samping yang dapat dilihat.
+>Fungsi _pure_ adalah fungsi yang memberikan input yang sama, akan selalu menghasilkan output yang sama dan tidak memiliki efek samping yang dapat dilihat.
 
 Gunakan `slice` dan `splice`. Mereka adalah dua fungsi yang melakukan hal yang sama - dengan cara yang sangat berbeda, ingat, meskipun begitu mereka tetap sama. Kita mengatakan `slice` dengan *pure* karena menghasilkan output per input yang sama setiap waktu, pasti. Bagaimanapun juga, `splice` akan mengambil arraynya dan mengeluarkannya kembali untuk perubahan selamanya yang merupakan efek yang dapat diamati.
 
