@@ -1,11 +1,11 @@
 # Chapter 04: Currying
 
-## Can't Live If Livin' Is without You
-My Dad once explained how there are certain things one can live without until one acquires them. A microwave is one such thing. Smart phones, another. The older folks among us will remember a fulfilling life sans internet. For me, currying is on this list.
+## Tidak Bisa Hidup Jika Hidup Tanpamu
+Ayah saya pernah menjelaskan bahwa bagaimana ada suatu hal bisa dilakukan seseorang tanpa mereka peroleh terlebih dahulu. Microwave adalah salah satunya. _Smart phone_, dan lainnya. Orang tua kita sudah mengingatkan bahwa kehidupan tanpa internet akan lebih baik. Bagi saya, _curying_ termasuk didalamnya.
 
-The concept is simple: You can call a function with fewer arguments than it expects. It returns a function that takes the remaining arguments.
+Konsepnya sederhana: Anda bisa memanggil fungsi dengan argumen yang lebih sedikit dari yang diharapkan. Itu akan mengembalikan fungsi yang mengambil argumen yang tersisa.
 
-You can choose to call it all at once or simply feed in each argument piecemeal.
+Anda dapat memilih untuk memanggil semuanya sekaligus atau hanya memberikan feed di setiap argumen sedikit demi sedikit.
 
 ```js
 const add = x => y => x + y;
@@ -16,10 +16,10 @@ increment(2); // 3
 addTen(2); // 12
 ```
 
-Here we've made a function `add` that takes one argument and returns a function. By calling it, the returned function remembers the first argument from then on via the closure. Calling it with both arguments all at once is a bit of a pain, however, so we can use a special helper function called `curry` to make defining and calling functions like this easier.
+Di sini kita telah membuat fungsi `add` yang membutuhkan satu argumen dan mengembalikan sebuah fungsi. Dengan memanggilnya, fungsi yang dikembalikan akan mengingat argumen pertama mulai saat itu melalui penutupan. Memanggilnya dengan dua argumen sekaligus akan sedikit menyedihkan, namun, kita bisa menggunakan fungsi pembantu khusus yang disebut `curry` untuk menentukan dan memanggil fungsi seperti ini dengan lebih mudah.
 
-Let's set up a few curried functions for our enjoyment. From now on, we'll summon our `curry`
-function defined in the [Appendix A - Essential Function Support](./appendix_a.md). 
+Mari kita atur beberapa fungsi _curried_. Mulai sekarang, kita akan memanggil `curry` kita
+fungsi yang didefinisikan dalam [Lampiran A - Dukungan Fungsi Esensial](./appendix_a.md).
 
 ```js
 const match = curry((what, s) => s.match(what));
@@ -28,9 +28,9 @@ const filter = curry((f, xs) => xs.filter(f));
 const map = curry((f, xs) => xs.map(f));
 ```
 
-The pattern I've followed is a simple, but important one. I've strategically positioned the data we're operating on (String, Array) as the last argument. It will become clear as to why upon use.
+Pola yang saya ikuti sangat sederhana, namun penting. Saya telah memposisikan secara strategis data yang kami operasikan pada (String, Array) sebagai argumen terakhir. Ini akan menjadi jelas saat digunakan.
 
-(The syntax `/r/g`  is a regular expression that means _means match every letter 'r'_. Read [more about regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) if you like.)
+(Sintaks `/r/g` adalah ekspresi reguler yang berarti _cocok dengan setiap huruf 'r'_. Baca [lebih banyak tentang ekspresi reguler] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) jika Anda suka.)
 
 ```js
 match(/r/g, 'hello world'); // [ 'r' ]
