@@ -30,7 +30,7 @@ const map = curry((f, xs) => xs.map(f));
 
 Pola yang saya ikuti sangat sederhana, namun penting. Saya telah memposisikan secara strategis data yang kami operasikan pada (String, Array) sebagai argumen terakhir. Ini akan menjadi jelas saat digunakan.
 
-(Sintaks `/r/g` adalah ekspresi reguler yang berarti _cocok dengan setiap huruf 'r'_. Baca [lebih banyak tentang ekspresi reguler] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) jika Anda suka.)
+(Sintaks `/r/g` adalah ekspresi reguler yang berarti _cocok dengan setiap huruf 'r'_. Baca [lebih banyak tentang ekspresi reguler](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) jika Anda suka.)
 
 ```js
 match(/r/g, 'hello world'); // [ 'r' ]
@@ -49,79 +49,78 @@ const censored = noVowels('*'); // x => x.replace(/[aeiou]/ig, '*')
 censored('Chocolate Rain'); // 'Ch*c*l*t* R**n'
 ```
 
-What's demonstrated here is the ability to "pre-load" a function with an argument or two in order to receive a new function that remembers those arguments.
+Apa yang ditunjukkan di sini adalah kemampuan untuk "pre-load" fungsi dengan satu atau dua argumen untuk menerima fungsi baru yang mengingat argumen tersebut.
 
-I encourage you to clone the Mostly Adequate repository (`git clone
-https://github.com/MostlyAdequate/mostly-adequate-guide.git`), copy the code above and have a
-go at it in the REPL. The curry function (and actually anything defined in the appendixes) has
-been made available from the `exercises/support.js` module. 
+Saya menganjurkan Anda untuk meng-_clone_ repositori Mostly Adequate (`git clone
+https://github.com/MostlyAdequate/mostly-adequate-guide.git`), salin kode di atas dan
+lanjutkan di REPL. Fungsi curry (dan sebenarnya semuanya sudah didefinisikan dalam lampiran) telah
+tersedia dari modul `exercises/support.js`. 
 
-## More Than a Pun / Special Sauce
+## Lebih dari Sekedar Permainan Kata-kata / Saus Spesial
 
-Currying is useful for many things. We can make new functions just by giving our base functions some arguments as seen in `hasSpaces`, `findSpaces`, and `censored`.
+Currying berguna untuk banyak hal. Kita bisa membuat fungsi baru hanya dengan memberikan fungsi dasar kita, beberapa argumen seperti yang terlihat pada `hasSpaces`,`findSpaces`, dan `censored`.
 
-We also have the ability to transform any function that works on single elements into a function that works on arrays simply by wrapping it with `map`:
+Kita juga memiliki kemampuan untuk mengubah fungsi yang bekerja pada elemen tunggal menjadi fungsi yang bekerja pada array hanya dengan membungkusnya dengan `map`:
 
 ```js
 const getChildren = x => x.childNodes;
 const allTheChildren = map(getChildren);
 ```
 
-Giving a function fewer arguments than it expects is typically called *partial application*. Partially applying a function can remove a lot of boiler plate code. Consider what the above `allTheChildren` function would be with the uncurried `map` from lodash (note the arguments are in a different order):
+Memberikan lebih sedikit argumen fungsi dari yang diharapkan biasanya disebut dengan *aplikasi parsial*. Fungsi aplikasi parsial dapat menghilangkan banyak kode boiler plate. Pertimbangkan apakah fungsi `allTheChildren` di atas dengan `map` belum di-_uncurried_ dari lodash (perhatikan argumennya dalam urutan yang berbeda):
 
 ```js
 const allTheChildren = elements => map(elements, getChildren);
 ```
 
-We typically don't define functions that work on arrays, because we can just call `map(getChildren)` inline. Same with `sort`, `filter`, and other higher order functions(Higher order function: A function that takes or returns a function).
+Kami biasanya tidak mendefinisikan fungsi yang bekerja pada array, karena kita bisa memanggil `map (getChildren)` ke dalam baris. Sama dengan `sort`, `filter`, dan fungsi orde tinggi lainnya (Fungsi orde tinggi: Fungsi yang mengambil atau mengembalikan fungsi).
 
-When we spoke about *pure functions*, we said they take 1 input to 1 output. Currying does exactly this: each single argument returns a new function expecting the remaining arguments. That, old sport, is 1 input to 1 output.
+Ketika kita berbicara tentang *fungsi pure*, kami mengatakan bahwa mereka mengambil 1 input ke 1 output. Currying melakukan persis seperti ini: setiap argumen mengembalikan fungsi baru untuk mengharapkan argumen yang tersisa. Itu, adalah cara lama, 1 input ke 1 output.
 
-No matter if the output is another function - it qualifies as pure. We do allow more than one argument at a time, but this is seen as merely removing the extra `()`'s for convenience.
+Tidak masalah jika outputnya adalah fungsi lain - itu memenuhi syarat _pure_. Kami mengizinkan lebih dari satu argumen pada satu waktu, tapi ini dilihat sebagai hanya dengan menghapus `()` tambahan agar lebih baik.
 
+## Kesimpulan
 
-## In Summary
+Currying sangat berguna dan saya sangat senang bekerja dengan fungsi carry setiap hari. Ini adalah alat sebagai sabuk yang membuat pemrograman fungsional kurang verbose dan membosankan.
 
-Currying is handy and I very much enjoy working with curried functions on a daily basis. It is a tool for the belt that makes functional programming less verbose and tedious.
+Kita dapat membuat fungsi baru yang berguna dengan cepat hanya dengan menyampaikan beberapa argumen dan sebagai bonus, kita telah mempertahankan definisi fungsi matematika meskipun dengan argumen yang banyak.
 
-We can make new, useful functions on the fly simply by passing in a few arguments and as a bonus, we've retained the mathematical function definition despite multiple arguments.
+Mari kita pelajari alat penting lain yang disebut `compose`.
 
-Let's acquire another essential tool called `compose`.
+[Bab 05: Pengodean dengan Composing](ch05.md)
 
-[Chapter 05: Coding by Composing](ch05.md)
+## Latihan
 
-## Exercises
+#### Catatan Latihan
 
-#### Note about Exercises
+Sepanjang buku ini, Anda mungkin menemukan bagian 'Latihan' seperti ini. Latihan bisa jadi
+dilakukan langsung di-browser asalkan Anda membaca dari [gitbook](https://mostly-adequate.gitbooks.io/mostly-adequate-guide) (disarankan).
 
-Throughout the book, you might encounter an 'Exercises' section like this one. Exercises can be
-done directly in-browser provided you're reading from [gitbook](https://mostly-adequate.gitbooks.io/mostly-adequate-guide) (recommended).
+Perhatikan bahwa, untuk semua latihan dalam buku ini, Anda selalu memiliki beberapa fungsi pembantu
+yang tersedia dalam lingkup global. Oleh karena itu, apa pun yang didefinisikan dalam [Lampiran A](./appendix_a.md),
+[Lampiran B](./appendix_b.md) dan [Lampiran C] (./appendix_c.md) tersedia untuk Anda! Dan jika
+itu tidak cukup, beberapa latihan juga akan menentukan fungsi yang spesifik untuk masalah
+yang mereka hadapi; Faktanya, anggap mereka tersedia juga.
 
-Note that, for all exercises of the book, you always have a handful of helper functions
-available in the global scope. Hence, anything that is define in [Appendix A](./appendix_a.md),
-[Appendix B](./appendix_b.md) and [Appendix C](./appendix_c.md) is available for you! And, as
-if it wasn't enough, some exercises will also define functions specific to the problem
-they present; as a matter of fact, consider them available as well.
+> Petunjuk: Anda dapat mengirimkan solusi Anda dengan melakukan `Ctrl + Enter` di editor yang disematkan!
 
-> Hint: you can submit your solution by doing `Ctrl + Enter` in the embedded editor!
+#### Menjalankan Latihan di Mesin Anda (opsional)
 
-#### Running Exercises on Your Machine (optional)
+Jika Anda lebih suka melakukan latihan secara langsung dalam file menggunakan editor Anda sendiri:
 
-Should you prefer to do exercises directly in files using your own editor:
+- clone repositori (`git clone git@github.com/MostlyAdequate/mostly-adequate-guide.git`)
+- masuk ke bagian *latihan* (`cd mostly-adequate-guide/exercises`)
+- pasang plumbering yang diperlukan menggunakan [npm](https://docs.npmjs.com/getting-started/installing-node) (`npm install`)
+- Selesaikan jawaban dengan memodifikasi file yang bernama *latihan\_\** pada folder bab yang sesuai
+- jalankan koreksi dengan npm (misalnya `npm run ch04`)
 
-- clone the repository (`git clone git@github.com/MostlyAdequate/mostly-adequate-guide.git`)
-- go in the *exercises* section (`cd mostly-adequate-guide/exercises')
-- install the necessary plumbering using [npm](https://docs.npmjs.com/getting-started/installing-node) (`npm install`)
-- complete answers by modifying the files named *exercises\_\** in the corresponding chapter's folder 
-- run the correction with npm (e.g. `npm run ch04`)
+Unit tes akan berjalan pada jawaban Anda dan akan memberikan petunjuk jika terjadi kesalahan. Ngomong-ngomong,
+Jawaban untuk latihan tersedia dalam file bernama *jawaban\_\**.
 
-Unit tests will run against your answers and provide hints in case of mistake. By the by, the
-answers to the exercises are available in files named *answers\_\**.
-
-#### Let's Practice!
+#### Ayo Berlatih!
 
 {% exercise %}  
-Refactor to remove all arguments by partially applying the function.  
+Refactor untuk menghapus semua argumen dengan menerapkan sebagian fungsi.
   
 {% initial src="./exercises/ch04/exercise_a.js#L3;" %}  
 ```js  
@@ -138,7 +137,7 @@ const words = str => split(' ', str);
 
 
 {% exercise %}  
-Refactor to remove all arguments by partially applying the functions.  
+Refactor untuk menghapus semua argumen dengan menerapkan sebagian fungsi.
   
 {% initial src="./exercises/ch04/exercise_b.js#L3;" %}  
 ```js  
@@ -154,7 +153,7 @@ const filterQs = xs => filter(x => match(/q/i, x), xs);
 ---
 
 
-Considering the following function:
+Menimbang fungsi berikut:
 
 ```js  
 const keepHighest = (x, y) => (x >= y ? x : y);  
@@ -162,6 +161,7 @@ const keepHighest = (x, y) => (x >= y ? x : y);
 
 {% exercise %}  
 Refactor `max` to not reference any arguments using the helper function `keepHighest`.  
+Refactor `max` untuk tidak mereferensi argumen apapun dengan menggunakan fungsi pembantu `keepHighest`.
   
 {% initial src="./exercises/ch04/exercise_c.js#L7;" %}  
 ```js  
