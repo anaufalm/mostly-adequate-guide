@@ -1,56 +1,56 @@
-# Chapter 06: Example Application
+# Bab 06: Contoh Aplikasi
 
-## Declarative Coding
+## Pengodean Deklaratif
 
-We are going to switch our mindset. From here on out, we'll stop telling the computer how to do its job and instead write a specification of what we'd like as a result. I'm sure you'll find it much less stressful than trying to micromanage everything all the time.
+Kita akan mengganti pola pikir kita. Dari sini, kita akan berhenti memberi tahu bagaimana komputer melakukan tugasnya dan sebaliknya menuliskan spesifikasi dari apa yang kita inginkan sebagai hasilnya. Saya yakin Anda akan merasa jauh lebih baik daripada mencoba micromanage sepanjang waktu.
 
-Declarative, as opposed to imperative, means that we will write expressions, as opposed to step by step instructions.
+Deklaratif, berlawanan dengan imperatif, berarti kita akan menulis ungkapan, yang berlawanan dengan instruksi langkah demi langkah.
 
-Think of SQL. There is no "first do this, then do that". There is one expression that specifies what we'd like from the database. We don't decide how to do the work, it does. When the database is upgraded and the SQL engine optimized, we don't have to change our query. This is because there are many ways to interpret our specification and achieve the same result.
+Pikirkan tentang SQL. Tidak akan ada "lakukan ini pertama, lalu itu". Ada satu ekspresi yang menentukan tentang apa yang kita inginkan dari database. Kami tidak memutuskan bagaimana melakukan pekerjaan itu. Ketika database diupgrade dan SQL dioptimalkan, kita tidak perlu mengubah kueri kita. Ini karena ada banyak cara untuk menafsirkan spesifikasi kita dan mencapai hasil yang sama.
 
-For some folks, myself included, it's hard to grasp the concept of declarative coding at first so let's point out a few examples to get a feel for it.
+Bagi sebagian orang, termasuk saya, sulit memahami konsep pengkodean deklaratif pada awalnya jadi mari kita tunjukkan beberapa contoh untuk membuktikannya.
 
 ```js
-// imperative
+// imperatif
 const makes = [];
 for (let i = 0; i < cars.length; i += 1) {
   makes.push(cars[i].make);
 }
 
-// declarative
+// deklaratif
 const makes = cars.map(car => car.make);
 ```
 
-The imperative loop must first instantiate the array. The interpreter must evaluate this statement before moving on. Then it directly iterates through the list of cars, manually increasing a counter and showing its bits and pieces to us in a vulgar display of explicit iteration.
+Pertama-tama loop imperatif harus memberikan contoh array. Penerjemah harus mengevaluasi pernyataan ini sebelum melanjutkan. Kemudian langsung melewati daftar mobil, secara manual akan meningkatkan penghitung dan menunjukkan potongan-potongannya kepada kami dalam tampilan perulangan eksplisit yang jelas.
 
-The `map` version is one expression. It does not require any order of evaluation. There is much freedom here for how the map function iterates and how the returned array may be assembled. It specifies *what*, not *how*. Thus, it wears the shiny declarative sash.
+Versi `map` adalah salah satu ungkapan. Tidak memerlukan urutan evaluasi apapun. Ada banyak kebebasan di sini untuk bagaimana fungsi _map_ iterates dan bagaimana array yang dikembalikan dapat dirakit. Ini menentukan *apa*, bukan *bagaimana*. Dengan demikian, ia akan mengenakan sabuk deklaratif yang mengilap.
 
-In addition to being clearer and more concise, the map function may be optimized at will and our precious application code needn't change.
+Selain menjadi lebih jelas dan ringkas, fungsi _map_ dapat dioptimalkan sesuka hati dan kode aplikasi berharga kami tidak perlu berubah.
 
-For those of you who are thinking "Yes, but it's much faster to do the imperative loop", I suggest you educate yourself on how the JIT optimizes your code. Here's a [terrific video that may shed some light](https://www.youtube.com/watch?v=g0ek4vV7nEA)
+Bagi Anda yang berpikir "Ya, tetapi akan lebih cepat menggunakan loop imperatif", saya sarankan anda mempelajari lagi tentang bagaimana JIT mengoptimalkan kode Anda. Berikut [video pencerahan yang hebat](https://www.youtube.com/watch?v=g0ek4vV7nEA)
 
-Here is another example.
+Berikut contoh lainnya.
 
 ```js
-// imperative
+// imperatif
 const authenticate = (form) => {
   const user = toUser(form);
   return logIn(user);
 };
 
-// declarative
+// deklaratif
 const authenticate = compose(logIn, toUser);
 ```
 
-Though there's nothing necessarily wrong with the imperative version, there is still an encoded step-by-step evaluation baked in. The `compose` expression simply states a fact: Authentication is the composition of `toUser` and `logIn`. Again, this leaves wiggle room for support code changes and results in our application code being a high level specification.
+Meskipun tidak ada yang salah dengan versi imperatif, tetapi masih ada evaluasi langkah demi langkah yang dikodekan. Ungkapan `compose` hanya menyatakan sebuah fakta: Otentikasi adalah komposisi `toUser` dan `logIn`. Sekali lagi, ini melewatkan ruang gerak untuk perubahan kode pendukung dan berakibat pada kode aplikasi kita sebagai spesifikasi tingkat tinggi.
 
-In the example above, the order of evaluation is specified (`toUser` must be called before `logIn`), but there are many scenarios where the order is not important, and this is easily specified with declarative coding (more on this later). 
+Pada contoh di atas, urutan evaluasi sudah ditentukan (`toUser` harus dipanggil sebelum `logIn`), namun ada banyak skenario dimana urutannya tidak penting, dan ini akan mudah ditentukan dengan pengkodean deklaratif (akan dijelaskan lebih lanjut nanti).
 
-Because we don't have to encode the order of evaluation, declarative coding lends itself to parallel computing. This coupled with pure functions is why FP is a good option for the parallel future - we don't really need to do anything special to achieve parallel/concurrent systems.
+Karena kita tidak perlu mengkodekan urutan evaluasi, maka pengkodean deklaratif cocok untuk komputasi paralel. Ini disandingkan dengan fungsi _pure_ mengapa FP adalah pilihan yang tepat untuk paralel kedepannya - kita tidak perlu melakukan sesuatu yang istimewa untuk mencapai sistem bersama/paralel.
 
-## A Flickr of Functional Programming
+## Pemrograman Fungsional Flickr
 
-We will now build an example application in a declarative, composable way. We'll still cheat and use side effects for now, but we'll keep them minimal and separate from our pure codebase. We are going to build a browser widget that sucks in flickr images and displays them. Let's start by scaffolding the app. Here's the html:
+Sekarang kita akan membuat sebuah contoh aplikasi dengan cara deklaratif, mudah digabungkan. Kami masih akan menipu dan menggunakan efek samping untuk saat ini, namun kami tetap mempertahankannya secara minimal dan terpisah dari basis kode _pure_ kami. Kita akan membuat widget browser yang menyebalkan menggunakan gambar flickr dan menampilkannya. Mari kita mulai dengan membangun aplikasi. Berikut htmlnya:
 
 
 ```html
@@ -58,7 +58,7 @@ We will now build an example application in a declarative, composable way. We'll
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Flickr Demo</title>
+    <title>Contoh Flickr</title>
   </head>
   <body>
     <main id="js-main" class="main"></main>
@@ -68,7 +68,7 @@ We will now build an example application in a declarative, composable way. We'll
 </html>
 ```
 
-And here's the main.js skeleton:
+Dan ini kerangka main.js-nya:
 
 ```js
 const CDN = s => `https://cdnjs.cloudflare.com/ajax/libs/${s}`;
@@ -77,20 +77,20 @@ const jquery = CDN('jquery/3.0.0-rc1/jquery.min');
 
 requirejs.config({ paths: { ramda, jquery } });
 require(['jquery', 'ramda'], ($, { compose, curry, map, prop }) => {
-  // app goes here
+  // aplikasi disini
 });
 ```
 
-We're pulling in [ramda](http://ramdajs.com) instead of lodash or some other utility library. It includes `compose`, `curry`, and more. I've used requirejs, which may seem like overkill, but we'll be using it throughout the book and consistency is key.
+Kita memasangnya di [ramda](http://ramdajs.com) bukan di lodash atau beberapa perpustakaan utilitas lainnya. Ini termasuk `compose`, `curry`, dan lainnya. Saya telah menggunakan requirejs, yang mungkin tampak berlebihan, tapi kami akan menggunakannya di seluruh buku ini dan konsisten adalah kuncinya.
 
-Now that that's out of the way, on to the spec. Our app will do 4 things.
+Nah, itu tidak masuk akal, untuk spec. Aplikasi kita akan melakukan 4 hal.
 
-1. Construct a url for our particular search term
-2. Make the flickr api call
-3. Transform the resulting json into html images
-4. Place them on the screen
+1. Membuat url untuk istilah pencarian kami
+2. Membuat panggilan api flickr
+3. Mengubah json yang dihasilkan menjadi gambar html
+4. Menempatkannya di layar
 
-There are 2 impure actions mentioned above. Do you see them? Those bits about getting data from the flickr api and placing it on the screen. Let's define those first so we can quarantine them. Also, I'll add our nice `trace` function for easy debugging.
+Ada 2 tindakan _impure_ yang disebutkan di atas. Apakah anda melihatnya? Bit-bit itu adalah tentang mendapatkan data dari api flickr dan menempatkannya di layar. Mari kita definisikan dulu sehingga kita bisa mengarantina mereka. Dan juga, saya akan menambahkan fungsi `trace` yang bagus untuk memudahkan debugging.
 
 ```js
 const Impure = {
@@ -100,9 +100,9 @@ const Impure = {
 };
 ```
 
-Here we've simply wrapped jQuery's methods to be curried and we've swapped the arguments to a more favorable position. I've namespaced them with `Impure` so we know these are dangerous functions. In a future example, we will make these two functions pure.
+Di sini kita hanya membungkus metode jQuery untuk menjadi _curried_ dan kita telah menukar argumen ke posisi yang lebih baik. Saya sudah menamai mereka dengan `Impure` jadi kita tahu ini adalah fungsi yang berbahaya. Pada contoh mendatang, kita akan membuat kedua fungsi ini menjadi _pure_.
 
-Next we must construct a url to pass to our `Impure.getJSON` function.
+Selanjutnya kita harus membuat sebuah url untuk diteruskan ke fungsi `Impure.getJSON` kita.
 
 ```js
 const host = 'api.flickr.com';
@@ -111,50 +111,51 @@ const query = t => `?tags=${t}&format=json&jsoncallback=?`;
 const url = t => `https://${host}${path}${query(t)}`;
 ```
 
-There are fancy and overly complex ways of writing `url` pointfree using monoids(we'll learn about these later) or combinators. We've chosen to stick with a readable version and assemble this string in the normal pointful fashion.
+Ada cara penulisan `url` yang bagus dan lebih kompleks menggunakan monoids (kita akan mempelajari ini nanti) atau combinator. Kami telah memilih untuk tetap menggunakan versi yang dapat dibaca dan merakit string ini dengan cara yang normal.
 
-Let's write an app function that makes the call and places the contents on the screen.
+Mari kita tulis fungsi aplikasi untuk membuat panggilan dan menempatkan konten di layar.
 
 ```js
 const app = compose(Impure.getJSON(Impure.trace('response')), url);
 app('cats');
 ```
 
-This calls our `url` function, then passes the string to our `getJSON` function, which has been partially applied with `trace`. Loading the app will show the response from the api call in the console.
+Ini akan memanggil fungsi `url` kita, lalu meneruskan string ke fungsi `getJSON` kita, yang sebagian telah diaplikasikan dengan `trace`. Ketika _loading_ aplikasi akan menunjukkan respon dari panggilan api di konsol.
 
-<img src="images/console_ss.png" alt="console response" />
+<img src="images/console_ss.png" alt="respon konsol" />
 
-We'd like to construct images out of this json. It looks like the `mediaUrls` are buried in `items` then each `media`'s `m` property.
+Kita ingin membuat gambar dari json ini. Seperti `mediaUrls` yang dimasukkan dalam ` items` kemudian setiap properti `m` milik `media`.
 
-Anyhow, to get at these nested properties we can use a nice universal getter function from ramda called `prop`. Here's a homegrown version so you can see what's happening:
+Bagaimanapun juga, untuk mendapatkan properti yang dibungkus ini kita bisa menggunakan fungsi _universal getter_ yang bagus dari ramda yang disebut `prop`. Inilah versi asli sehingga anda dapat melihat apa yang terjadi:
+
 
 ```js
 const prop = curry((property, object) => object[property]);
 ```
 
-It's quite dull actually. We just use `[]` syntax to access a property on whatever object. Let's use this to get at our `mediaUrls`.
+Sebenarnya ini cukup membosankan. Kami hanya menggunakan syntax `[]` untuk mengakses properti pada objek apapun. Mari kita gunakan ini untuk membuka `mediaUrls`.
 
 ```js
 const mediaUrl = compose(prop('m'), prop('media'));
 const mediaUrls = compose(map(mediaUrl), prop('items'));
 ```
 
-Once we gather the `items`, we must `map` over them to extract each media url. This results in a nice array of `mediaUrls`. Let's hook this up to our app and print them on the screen.
+Setelah kita mengumpulkan `item`, kita harus melakukan `map` di atasnya untuk mengekstrak setiap url media. Ini akan menghasilkan array yang bagus dari `mediaUrls`. Mari kita kaitkan ini ke aplikasi dan mencetaknya ke layar.
 
 ```js
 const render = compose(Impure.setHtml('js-main'), mediaUrls);
 const app = compose(Impure.getJSON(render), url);
 ```
 
-All we've done is make a new composition that will call our `mediaUrls` and set the body html with them. We've replaced the `trace` call with `render` now that we have something to render besides raw json. This will crudely display our `mediaUrls` directly in the body.
+Yang kita lakukan adalah membuat komposisi baru yang akan memanggil `mediaUrls` dan mengatur body html. Kami juga telah mengganti panggilan `trace` dengan` render` sekarang kita memiliki sesuatu yang dapat dirender selain raw json. Ini akan menampilkan `mediaUrls` kita secara langsung di body.
 
-Our final step is to turn these `mediaUrls` into bonafide `images`. In a bigger application, we'd use a template/dom library like Handlebars or React. For this application though, we only need an img tag so let's stick with jQuery.
+Langkah terakhir kita adalah mengubah `mediaUrls` ini menjadi `images` bonafide. Dalam aplikasi yang lebih besar, kita akan menggunakan perpustakaan template/dom seperti Handlebet atau React. Bahkan untuk aplikasi ini sekalipun, kita hanya membutuhkan tag img jadi mari kita tetapkan dengan jQuery.
 
 ```js
 const img = src => $('<img />', { src });
 ```
 
-jQuery's `html` method will accept an array of tags. We only have to transform our mediaUrls into images and send them along to `setHtml`.
+Metode `html` jQuery akan menerima sebuah tag array. Kita hanya perlu mengubah media kita menjadi gambar dan mengirimnya ke `setHtml`.
 
 ```js
 const images = compose(map(img), mediaUrls);
@@ -162,18 +163,18 @@ const render = compose(Impure.setHtml('body'), images);
 const app = compose(Impure.getJSON(render), url);
 ```
 
-And we're done!
+Dan selesai!
 
-<img src="images/cats_ss.png" alt="cats grid" />
+<img src="images/cats_ss.png" alt="grid kucing" />
 
-Here is the finished script:
-[include](./exercises/ch06/main.js)
+Berikut adalah script yang telah selesai:
+[terlampir](./exercises/ch06/main.js)
 
-Now look at that. A beautifully declarative specification of what things are, not how they come to be. We now view each line as an equation with properties that hold. We can use these properties to reason about our application and refactor.
+Sekarang lihat. Sebuah spesifikasi deklaratif yang indah apa adanya, bukan bagaimana keadaannya. Kita sekarang melihat setiap baris sebagai persamaan properti yang dipertahankan. Kita bisa menggunakan properti ini sebagai pokok untuk aplikasi dan refactor kita.
 
-## A Principled Refactor
+## Refactor Prinsipal
 
-There is an optimization available - we map over each item to turn it into a media url, then we map again over those mediaUrls to turn them into img tags. There is a law regarding map and composition:
+Ada optimasi yang tersedia - kami memetakan _(map)_ setiap item untuk mengubahnya menjadi url media, lalu kami memetakannya lagi di media tersebut untuk mengubahnya menjadi tag img. Ada aturan tentang _map_ dan _composition_:
 
 
 ```js
@@ -181,23 +182,23 @@ There is an optimization available - we map over each item to turn it into a med
 compose(map(f), map(g)) === map(compose(f, g));
 ```
 
-We can use this property to optimize our code. Let's have a principled refactor.
+Kita bisa menggunakan properti ini untuk mengoptimalkan kode kita. Mari kita buat refactor berprinsip.
 
 ```js
-// original code
+// kode asli
 const mediaUrl = compose(prop('m'), prop('media'));
 const mediaUrls = compose(map(mediaUrl), prop('items'));
 const images = compose(map(img), mediaUrls);
 ```
 
-Let's line up our maps. We can inline the call to `mediaUrls` in `images` thanks to equational reasoning and purity.
+Mari kita bariskan peta kita. Kita dapat meng-inline panggilan ke `mediaUrls` dalam `images` berkat penalaran dan kemurnian yang seimbang.
 
 ```js
 const mediaUrl = compose(prop('m'), prop('media'));
 const images = compose(map(img), map(mediaUrl), prop('items'));
 ```
 
-Now that we've lined up our `map`'s we can apply the composition law.
+Sekarang kita sudah membariskan `map` yang bisa kita terapkan dengan hukum komposisi.
 
 ```js
 /*
@@ -209,7 +210,7 @@ const mediaUrl = compose(prop('m'), prop('media'));
 const images = compose(map(compose(img, mediaUrl)), prop('items'));
 ```
 
-Now the bugger will only loop once while turning each item into an img. Let's just make it a little more readable by extracting the function out.
+Sekarang bugger hanya akan berputar satu kali sambil mengubah setiap item menjadi sebuah img. Mari kita membuatnya sedikit lebih mudah dibaca dengan mengekstrak fungsi keluar.
 
 ```js
 const mediaUrl = compose(prop('m'), prop('media'));
@@ -217,8 +218,8 @@ const mediaToImg = compose(img, mediaUrl);
 const images = compose(map(mediaToImg), prop('items'));
 ```
 
-## In Summary
+## Kesimpulan
 
-We have seen how to put our new skills into use with a small, but real world app. We've used our mathematical framework to reason about and refactor our code. But what about error handling and code branching? How can we make the whole application pure instead of merely namespacing destructive functions? How can we make our app safer and more expressive? These are the questions we will tackle in part 2.
+Kita telah melihat bagaimana memanfaatkan keahlian baru untuk digunakan dengan aplikasi kecil yang nyata. Kita telah menggunakan kerangka matematis untuk alasan tentang kode refaktor. Tapi bagaimana dengan penanganan kesalahan dan kode percabangan? Bagaimana kita bisa membuat keseluruhan aplikasi itu menjadi _pure_, bukan hanya sekedar menyebut fungsi destruktif? Bagaimana kita bisa membuat aplikasi kita lebih aman dan lebih ekspresif? Inilah pertanyaan yang akan kita hadapi di bagian 2.
 
-[Chapter 07: Hindley-Milner and Me](ch07.md)
+[Bab 07: Saya dan Hindley-Milner](ch07.md)
