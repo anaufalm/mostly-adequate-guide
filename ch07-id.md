@@ -1,18 +1,19 @@
-# Chapter 07: Hindley-Milner and Me
+# Bab 07: Saya dan Hindley-Milner
 
-## What's Your Type?
-If you're new to the functional world, it won't be long before you find yourself knee deep in type signatures. Types are the meta language that enables people from all different backgrounds to communicate succinctly and effectively. For the most part, they're written with a system called "Hindley-Milner", which we'll be examining together in this chapter.
+## Apa Tipe Anda?
+Jika Anda baru mengenal dunia fungsional, itu tidak akan selama Anda menemukan tipe tanda tangan yang pas. Jenis adalah bahasa meta yang memungkinkan orang dari semua latar belakang yang berbeda untuk berkomunikasi secara ringkas dan efektif. Sebagian besar, mereka ditulis dengan sistem yang disebut "Hindley-Milner", yang akan kita periksa bersama di bab ini.
 
-When working with pure functions, type signatures have an expressive power to which the English language cannot hold a candle. These signatures whisper in your ear the intimate secrets of a function. In a single, compact line, they expose behaviour and intention. We can derive "free theorems" from them. Types can be inferred so there's no need for explicit type annotations. They can be tuned to fine point precision or left general and abstract. They are not only useful for compile time checks, but also turn out to be the best possible documentation available. Type signatures thus play an important part in functional programming - much more than you might first expect.
+Saat bekerja dengan fungsi pure, tipe tanda tangan memiliki kekuatan ekspresif yang bahasa Inggrisnya tidak dapat menampung lilin. Tanda tangan ini membisikkan rahasia rahasia sebuah fungsi di telinga Anda. Secara tunggal, garis kompak, mereka mengekspos perilaku dan niat. Kita bisa mendapatkan "teorema bebas" dari mereka. Tipe ini dapat disimpulkan sehingga tidak perlu anotasi tipe eksplisit. Mereka dapat atur ke titik presisi atau kiri secara umum dan abstrak. Mereka tidak hanya berguna untuk pemeriksaan waktu kompilasi, namun juga menjadi dokumentasi terbaik yang tersedia. Tipe tanda tangan memainkan peran penting dalam pemrograman fungsional - jauh lebih banyak dari yang Anda harapkan.
 
-JavaScript is a dynamic language, but that does not mean we avoid types all together. We're still working with strings, numbers, booleans, and so on. It's just that there isn't any language level integration so we hold this information in our heads. Not to worry, since we're using signatures for documentation, we can use comments to serve our purpose.
+JavaScript adalah bahasa yang dinamis, tapi bukan berarti kita menghindari semua tipe bersama. Kami masih bekerja dengan string, angka, boolean, dan sebagainya. Hanya saja tidak ada integrasi tingkat bahasa sehingga kita menyimpan informasi ini di kepala kita. Tidak perlu khawatir, karena kita menggunakan tanda tangan untuk dokumentasi, kita bisa menggunakan komentar untuk melayani tujuan kita.
 
-There are type checking tools available for JavaScript such as [Flow](http://flowtype.org/) or the typed dialect, [TypeScript](http://www.typescriptlang.org/). The aim of this book is to equip one with the tools to write functional code so we'll stick with the standard type system used across FP languages.
+Ada jenis alat pemeriksaan tipe yang tersedia untuk JavaScript seperti [Flow](http://flowtype.org/) atau logat yang diketik, [TypeScript](http://www.typescriptlang.org/). Tujuan dari buku ini adalah untuk melengkapi satu alat untuk menulis kode fungsional sehingga kita akan tetap menggunakan sistem tipe standar yang digunakan di seluruh bahasa FP.
 
 
-## Tales from the Cryptic
+## Kisah Cryptic
 
-From the dusty pages of math books, across the vast sea of white papers, amongst casual Saturday morning blog posts, down into the source code itself, we find Hindley-Milner type signatures. The system is quite simple, but warrants a quick explanation and some practice to fully absorb the little language.
+Dari halaman-halaman buku matematika yang berdebu, yang melintasi lautan kertas putih yang luas, di antara tulisan-tulisan blog Sabtu pagi yang santai, masuk ke dalam kode sumber itu sendiri, kami menemukan tipe tanda tangan Hindley-Milner. Sistemnya cukup sederhana, namun menjamin penjelasan singkat dan beberapa praktik untuk menyerap bahasa kecil itu sepenuhnya.
+
 
 ```js
 // capitalize :: String -> String
@@ -21,11 +22,11 @@ const capitalize = s => toUpperCase(head(s)) + toLowerCase(tail(s));
 capitalize('smurf'); // 'Smurf'
 ```
 
-Here, `capitalize` takes a `String` and returns a `String`. Never mind the implementation, it's the type signature we're interested in.
+Di sini, `capitalize` mengambil` String` dan mengembalikan sebuah `String`. Lupakan implementasinya, itu adalah jenis tanda tangan yang kita minati.
 
-In HM, functions are written as `a -> b` where `a` and `b` are variables for any type. So the signatures for `capitalize` can be read as "a function from `String` to `String`". In other words, it takes a `String` as its input and returns a `String` as its output.
+Di HM, fungsi ditulis sebagai `a -> b` di mana `a` dan `b` adalah variabel untuk tipe apa saja. Jadi tanda tangan untuk `capitalize` dapat dibaca sebagai "fungsi dari `String` ke` String`". Dengan kata lain, dibutuhkan sebuah `String` sebagai input dan mengembalikan sebuah `String` sebagai outputnya.
 
-Let's look at some more function signatures:
+Mari kita lihat beberapa tanda tangan fungsi lainnya:
 
 ```js
 // strLength :: String -> Number
@@ -41,18 +42,18 @@ const match = curry((reg, s) => s.match(reg));
 const replace = curry((reg, sub, s) => s.replace(reg, sub));
 ```
 
-`strLength` is the same idea as before: we take a `String` and return you a `Number`.
+`strLength` adalah ide yang sama seperti sebelumnya: kita mengambil sebuah `String` dan mengembalikan sebuah `Number`.
 
-The others might perplex you at first glance. Without fully understanding the details, you could always just view the last type as the return value. So for `match` you can interpret as: It takes a `Regex` and a `String` and returns you `[String]`. But an interesting thing is going on here that I'd like to take a moment to explain if I may.
+Yang lain sekilas mungkin akan membingungkan Anda. Tanpa memahami detail sepenuhnya, Anda selalu bisa melihat tipe terakhir sebagai nilai pengembalian. Jadi untuk `match` Anda bisa menafsirkannya sebagai: Dibutuhkan `Regex` dan `String` dan mengembalikan `[String]` Anda. Tapi hal yang menarik terjadi di sini bahwa saya ingin meluangkan waktu untuk menjelaskan apakah saya boleh.
 
-For `match` we are free to group the signature like so:
+Untuk `match` kita bebas mengelompokkan tanda tangan seperti:
 
 ```js
 // match :: Regex -> (String -> [String])
 const match = curry((reg, s) => s.match(reg));
 ```
 
-Ah yes, grouping the last part in parenthesis reveals more information. Now it is seen as a function that takes a `Regex` and returns us a function from `String` to `[String]`. Because of currying, this is indeed the case: give it a `Regex` and we get a function back waiting for its `String` argument. Of course, we don't have to think of it this way, but it is good to understand why the last type is the one returned.
+Ah iya, mengelompokkan bagian terakhir dalam kurung mengungkapkan lebih banyak informasi. Sekarang terlihat sebagai fungsi yang mengambil `Regex` dan mengembalikan kita fungsi dari `String` ke `[String]`. Karena currying, ini akan terjadi: berikan `Regex` dan kita akan mendapatkan sebuah fungsi kembali menunggu argumen `String` nya. Tentu saja, kita tidak perlu memikirkannya seperti ini, tapi bagus untuk mengerti mengapa tipe terakhir adalah yang kembali.
 
 ```js
 // match :: Regex -> (String -> [String])
@@ -60,16 +61,16 @@ Ah yes, grouping the last part in parenthesis reveals more information. Now it i
 const onHoliday = match(/holiday/ig);
 ```
 
-Each argument pops one type off the front of the signature. `onHoliday` is `match` that already has a `Regex`.
+Setiap argumen muncul satu jenis di bagian depan tanda tangan. `onHoliday` adalah `match` yang sudah memiliki `Regex`.
 
 ```js
 // replace :: Regex -> (String -> (String -> String))
 const replace = curry((reg, sub, s) => s.replace(reg, sub));
 ```
 
-As you can see with the full parenthesis on `replace`, the extra notation can get a little noisy and redundant so we simply omit them. We can give all the arguments at once if we choose so it's easier to just think of it as: `replace` takes a `Regex`, a `String`, another `String` and returns you a `String`.
+Seperti yang bisa Anda lihat dengan tanda kurung penuh pada `replace`, notasi tambahan bisa menjadi sedikit bising dan berlebihan sehingga kami sudah menghilangkannya. Kita bisa memberikan semua argumen sekaligus jika kita memilihnya menjadi lebih mudah untuk menganggapnya sebagai: `replace` mengambil `Regex`, `String` dan `String` lain dan mengembalikan sebuah `String`.
 
-A few last things here:
+Beberapa hal terakhir di sini:
 
 
 ```js
@@ -80,15 +81,15 @@ const id = x => x;
 const map = curry((f, xs) => xs.map(f));
 ```
 
-The `id` function takes any old type `a` and returns something of the same type `a`. We're able to use variables in types just like in code. Variable names like `a` and `b` are convention, but they are arbitrary and can be replaced with whatever name you'd like. If they are the same variable, they have to be the same type. That's an important rule so let's reiterate: `a -> b` can be any type `a` to any type `b`, but `a -> a` means it has to be the same type. For example, `id` may be `String -> String` or `Number -> Number`, but not `String -> Bool`.
+Fungsi `id` mengambil tipe lama `a` dan mengembalikan sesuatu dengan tipe yang sama dengan `a`. Kami dapat menggunakan variabel dalam tipe seperti kode. Nama variabel seperti `a` dan` b` adalah konvensi, namun bersifat sesuka hati dan dapat diganti dengan nama apa pun yang Anda inginkan. Jika mereka adalah variabel yang sama, mereka harus tipe yang sama. Itu aturan yang penting jadi mari kita tegaskan: `a -> b` bisa menjadi tipe `a` untuk tipe `b`, tapi `a -> a` berarti harus tipe yang sama. Misalnya, `id` mungkin `String -> String` atau `Number -> Number`, tapi bukan `String -> Bool`.
 
-`map` similarly uses type variables, but this time we introduce `b` which may or may not be the same type as `a`. We can read it as: `map` takes a function from any type `a` to the same or different type `b`, then takes an array of `a`'s and results in an array of `b`'s.
+`map` juga menggunakan variabel tipe, tapi kali ini kami mengenalkan `b` yang mungkin atau mungkin bukan tipe yang sama dengan `a`. Kita bisa membacanya sebagai: `map` mengambil sebuah fungsi dari tipe `a` ke tipe yang sama atau berbeda `b`, lalu mengambil sebuah array dari `a` dan menghasilkan array dari `b`.
 
-Hopefully, you've been overcome by the expressive beauty in this type signature. It literally tells us what the function does almost word for word. It's given a function from `a` to `b`, an array of `a`, and it delivers us an array of `b`. The only sensible thing for it to do is call the bloody function on each `a`. Anything else would be a bold face lie.
+Mudah-mudahan, Anda sudah diatasi dengan keindahan ekspresif dalam tipe signature ini. Ini secara harfiah memberi tahu kita apakah fungsinya hampir kata demi kata. Ini diberi fungsi dari `a` ke` b`, sebuah array dari `a`, dan ini memberi kita sebuah array dari` b`. Satu-satunya hal yang masuk akal untuk dilakukan adalah memanggil fungsi berdarah pada setiap `a`. Ada lagi wajah yang berani.
 
-Being able to reason about types and their implications is a skill that will take you far in the functional world. Not only will papers, blogs, docs, etc, become more digestible, but the signature itself will practically lecture you on its functionality. It takes practice to become a fluent reader, but if you stick with it, heaps of information will become available to you sans RTFMing.
+Mampu memberikan balasan tentang tipe dan implikasinya adalah keterampilan yang akan membawa Anda jauh ke dalam dunia fungsional. Tidak hanya akan kertas, blog, dokumen, dll, menjadi lebih mudah dicerna, namun tanda tangan itu sendiri praktis akan mengajarkan Anda tentang fungsinya. Dibutuhkan latihan untuk menjadi pembaca yang fasih, tapi jika Anda tetap menggunakannya, banyak informasi akan tersedia untuk Anda sans RTFMing.
 
-Here's a few more just to see if you can decipher them on your own.
+Ini beberapa contoh lagi hanya untuk melihat apakah Anda bisa mengartikannya sendiri.
 
 ```js
 // head :: [a] -> a
@@ -101,34 +102,34 @@ const filter = curry((f, xs) => xs.filter(f));
 const reduce = curry((f, x, xs) => xs.reduce(f, x));
 ```
 
-`reduce` is perhaps, the most expressive of all. It's a tricky one, however, so don't feel inadequate should you struggle with it. For the curious, I'll try to explain in English though working through the signature on your own is much more instructive.
+`reduce` mungkin, yang paling ekspresif dari semuanya. Ini akan rumit, bagaimanapun, jangan merasa canggung jika Anda harus berjuang melawannya. Bagi yang penasaran, saya akan coba jelaskan dalam bahasa Indonesia meski menggarap tanda tangan sendiri jauh lebih instruktif.
 
-Ahem, here goes nothing....looking at the signature, we see the first argument is a function that expects a `b`, an `a`, and produces a `b`. Where might it get these `a`s and `b`s? Well, the following arguments in the signature are a `b` and an array of `a`s so we can only assume that the `b` and each of those `a`s will be fed in. We also see that the result of the function is a `b` so the thinking here is our final incantation of the passed in function will be our output value. Knowing what reduce does, we can state that the above investigation is accurate.
+Ahem, di sini tidak ada apa-apa.... melihat tanda tangan, kita melihat argumen pertama adalah fungsi yang mengharapkan `b`, `a`, dan menghasilkan `b`. Darimana `a` dan `b` ini didapatkan? Nah, argumen berikut dalam tanda tangan adalah `b` dan sebuah array `a` sehingga kita hanya bisa berasumsi bahwa `b` dan masing-masing `a` akan menjadi umpan masuk. Kita juga melihat hasil dari fungsinya adalah `b` sehingga pemikiran di sini adalah mantra terakhir dari fungsi yang berlalu akan menjadi nilai output kita. Untuk mengetahui kekurangannya, kita dapat menyatakan bahwa penyelidikannya akurat.
 
 
-## Narrowing the Possibility
+## Mempersempit Kemungkinan
 
-Once a type variable is introduced, there emerges a curious property called *[parametricity](https://en.wikipedia.org/wiki/Parametricity)*. This property states that a function will *act on all types in a uniform manner*. Let's investigate:
+Ketika variabel tipe diperkenalkan, muncul properti penasaran yang disebut *[parametricity](https://en.wikipedia.org/wiki/Parametricity)*. Properti ini menyatakan bahwa suatu fungsi akan *bertindak pada semua jenis dengan cara yang seragam*. Mari selidiki:
 
 ```js
 // head :: [a] -> a
 ```
 
-Looking at `head`, we see that it takes `[a]` to `a`. Besides the concrete type `array`, it has no other information available and, therefore, its functionality is limited to working on the array alone. What could it possibly do with the variable `a` if it knows nothing about it? In other words, `a` says it cannot be a *specific* type, which means it can be *any* type, which leaves us with a function that must work uniformly for *every* conceivable type. This is what *parametricity* is all about. Guessing at the implementation, the only reasonable assumptions are that it takes the first, last, or a random element from that array. The name `head` should tip us off.
+Lihatlah `head`, kita melihat bahwa `[a]` dibutuhkan ke `a`. Selain tipe beton `array`, tidak ada informasi lain yang tersedia dan, oleh karena itu, fungsinya terbatas untuk mengerjakan array saja. Apa yang mungkin bisa dilakukan dengan variabel `a` jika tidak tahu apa-apa tentang hal itu? Dengan kata lain, `a` mengatakan bahwa itu tidak bisa menjadi tipe *spesifik*, yang berarti dapat berupa tipe *apapun*, yang membuat kita memiliki fungsi yang harus bekerja secara seragam untuk *setiap* jenis yang mungkin ada. Inilah yang dimaksud *parametrikitas*. Menebak implementasi, satu-satunya asumsi yang masuk akal adalah bahwa dibutuhkan unsur pertama, terakhir, atau acak dari array itu. Nama `head` harus memberi tip pada kita.
 
-Here's another one:
+Berikut yang lainnya:
 
 ```js
 // reverse :: [a] -> [a]
 ```
 
-From the type signature alone, what could `reverse` possibly be up to? Again, it cannot do anything specific to `a`. It cannot change `a` to a different type or we'd introduce a `b`. Can it sort? Well, no, it wouldn't have enough information to sort every possible type. Can it re-arrange?  Yes, I suppose it can do that, but it has to do so in exactly the same predictable way. Another possibility is that it may decide to remove or duplicate an element. In any case, the point is, the possible behaviour is massively narrowed by its polymorphic type.
+Dari jenis tanda tangan saja, apa yang bisa di `reverse` sehingga bisa sampai? Sekali lagi, itu tidak dapat melakukan sesuatu yang spesifik untuk `a`. Ini tidak dapat mengubah `a` ke tipe yang berbeda atau memperkenalkan `b`. Bisakah diurutkan? Nah, tidak, tidak akan ada cukup informasi untuk menyortir setiap jenis yang mungkin. Bisakah menata ulang? Ya, saya kira itu bisa dilakukan, tapi harus dengan cara yang sama persis dengan yang bisa diprediksi. Kemungkinan lain adalah memutuskan untuk menghapus atau menduplikasi elemen. Bagaimanapun, intinya adalah, kemungkinan tingkah laku tersebut secara besar-besaran menyempit oleh jenis polimorfiknya.
 
-This narrowing of possibility allows us to use type signature search engines like [Hoogle](https://www.haskell.org/hoogle) to find a function we're after. The information packed tightly into a signature is quite powerful indeed.
+Penyempitan kemungkinan ini memungkinkan kita untuk menggunakan mesin pencari jenis tanda tangan seperti [Hoogle](https://www.haskell.org/hoogle) untuk menemukan fungsi yang kita cari. Informasi yang dikemas erat menjadi tanda tangan memang cukup kuat.
 
-## Free as in Theorem
+## Bebas seperti dalam Teorema
 
-Besides deducing implementation possibilities, this sort of reasoning gains us *free theorems*. What follows are a few random example theorems lifted directly from [Wadler's paper on the subject](http://ttic.uchicago.edu/~dreyer/course/papers/wadler.pdf).
+Selain mengurangi kemungkinan implementasi, penalaran semacam ini bisa menghasilkan *teorema bebas*. Berikut adalah beberapa teorema contoh acak yang diangkat langsung dari [kertas Wadler pada subjek](http://ttic.uchicago.edu/~dreyer/course/papers/wadler.pdf).
 
 ```js
 // head :: [a] -> a
@@ -139,35 +140,35 @@ compose(map(f), filter(compose(p, f))) === compose(filter(p), map(f));
 ```
 
 
-You don't need any code to get these theorems, they follow directly from the types. The first one says that if we get the `head` of our array, then run some function `f` on it, that is equivalent to, and incidentally, much faster than, if we first `map(f)` over every element then take the `head` of the result.
+Anda tidak memerlukan kode untuk mendapatkan teorema ini, karena mereka mengikuti langsung dari tipenya. Yang pertama mengatakan bahwa jika kita mendapatkan `head` dari array kita, maka jalankan beberapa fungsi `f` di atasnya, itu akan setara dengan, dan kebetulan, jauh lebih cepat daripada, jika kita pertama kali `melihat (f)` pada setiap elemen lalu mengambil hasil `head`.
 
-You might think, well that's just common sense. But last I checked, computers don't have common sense. Indeed, they must have a formal way to automate these kind of code optimizations. Maths has a way of formalizing the intuitive, which is helpful amidst the rigid terrain of computer logic.
+Anda mungkin berpikir, itu hanya akal sehat. Tapi terakhir saya cek, komputer tidak memiliki akal sehat. Memang, mereka harus memiliki cara formal untuk mengotomatisasi pengoptimalan kode semacam ini. Matematika memiliki cara untuk meresmikan intuitif, yang sangat membantu di tengah medan logika komputer yang kaku.
 
-The `filter` theorem is similar. It says that if we compose `f` and `p` to check which should be filtered, then actually apply the `f` via `map` (remember filter, will not transform the elements - its signature enforces that `a` will not be touched), it will always be equivalent to mapping our `f` then filtering the result with the `p` predicate.
+Teorema `filter` juga serupa. Dikatakan bahwa jika kita menulis `f` dan `p` untuk memeriksa mana yang harus disaring, maka itu benar-benar menerapkan `f` melalui `map` (ingat, filter tidak akan mengubah elemen - tanda tangannya memaksa bahwa `a` tidak akan disentuh), akan selalu sama dengan pemetaan `f` kami kemudian memfilter hasilnya dengan predikat `p`.
 
-These are just two examples, but you can apply this reasoning to any polymorphic type signature and it will always hold. In JavaScript, there are some tools available to declare rewrite rules. One might also do this via the `compose` function itself. The fruit is low hanging and the possibilities are endless.
+Ini hanya dua contoh, tapi Anda bisa menerapkan penalaran ini pada tanda jenis polimorfik dan itu akan selalu berlaku. Dalam JavaScript, ada beberapa alat yang tersedia untuk mendeklarasikan aturan penulisan ulang. Seseorang mungkin juga melakukan ini melalui fungsi `compose` itu sendiri. Buahnya gantung rendah dan kemungkinannya tak ada habisnya.
 
-## Constraints
+## Kendala
 
-One last thing to note is that we can constrain types to an interface.
+Satu hal yang perlu diperhatikan adalah kita bisa membatasi tipe ke antarmuka.
 
 ```js
 // sort :: Ord a => [a] -> [a]
 ```
 
-What we see on the left side of our fat arrow here is the statement of a fact: `a` must be an `Ord`. Or in other words, `a` must implement the `Ord` interface. What is `Ord` and where did it come from? In a typed language it would be a defined interface that says we can order the values. This not only tells us more about the `a` and what our `sort` function is up to, but also restricts the domain. We call these interface declarations *type constraints*.
+Apa yang kita lihat di sisi kiri panah lemak kita di sini adalah pernyataan sebuah fakta: `a` harus menjadi `Ord`. Atau dengan kata lain, `a` harus mengimplementasikan antarmuka `Ord`. Apa itu `Ord` dan dari mana asalnya? Dalam bahasa yang diketik itu akan menjadi antarmuka yang didefinisikan yang mengatakan bahwa kita dapat memesan nilai-nilainya. Ini tidak hanya memberi tahu lebih banyak tentang fungsi `a` dan fungsi `sort` kami, namun juga membatasi domain. Kami memanggil deklarasi antarmuka ini *tipe kendala*.
 
 ```js
 // assertEqual :: (Eq a, Show a) => a -> a -> Assertion
 ```
 
-Here, we have two constraints: `Eq` and `Show`. Those will ensure that we can check equality of our `a`s and print the difference if they are not equal.
+Di sini, kita memiliki dua kendala: `Eq` dan `Show`. Mereka akan memastikan bahwa kita dapat memeriksa persamaan `a` kita dan mencetak perbedaannya jika tidak sama.
 
-We'll see more examples of constraints and the idea should take more shape in later chapters.
+Kita akan melihat lebih banyak contoh kendala dan idenya harus lebih banyak terbentuk di bab selanjutnya.
 
 
-## In Summary
+## Kesimpulan
 
-Hindley-Milner type signatures are ubiquitous in the functional world. Though they are simple to read and write, it takes time to master the technique of understanding programs through signatures alone. We will add type signatures to each line of code from here on out.
+Tanda tangan Hindley-Milner ada di mana-mana di dunia fungsional. Meski mudah dibaca dan ditulis, butuh waktu untuk menguasai teknik memahami program melalui tanda tangan saja. Kami akan menambahkan tanda tangan jenis ke setiap baris kode dari sini.
 
-[Chapter 08: Tupperware](ch08.md)
+[Bab 08: Tupperware](ch08.md)
